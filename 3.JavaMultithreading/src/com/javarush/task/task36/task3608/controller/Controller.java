@@ -19,9 +19,15 @@ public class Controller {
         this.usersView.refresh(this.model.getModelData());
     }
 
+
     public void setUsersView(UsersView usersView) {
         this.usersView = usersView;
-//        usersView.refresh(this.model.getModelData());
+    }
+
+    public void onShowAllDeletedUsers()
+    {
+        this.model.loadDeletedUsers();
+        this.usersView.refresh(this.model.getModelData());
     }
 
 }

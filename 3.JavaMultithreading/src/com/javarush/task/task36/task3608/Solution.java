@@ -22,6 +22,7 @@ public class Solution {
 //        usersView.refresh(modelData);
 
         controller.setUsersView(usersView);
-        usersView.fireEventShowAllUsers();
+//        usersView.fireEventShowAllUsers();
+        usersView.fireEventShowDeletedUsers();
     }
 }
