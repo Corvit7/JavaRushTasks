@@ -52,6 +52,12 @@ public class Controller {
         this.usersView.refresh(model.getModelData());
     }
 
+    public void onUserChange(String name, long id, int level)
+    {
+        this.model.changeUserData(name, id, level);
+        this.usersView.refresh(model.getModelData());
+    }
+
 
 
 }
