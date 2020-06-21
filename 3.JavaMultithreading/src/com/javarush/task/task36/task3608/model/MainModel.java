@@ -12,6 +12,8 @@ public class MainModel implements Model{
 
     @Override
     public void loadUsers() {
+        this.modelData.setDisplayDeletedUserList(false);
+        this.modelData.setActiveUser((new User("Ivanov", 123l, 1)));
         this.modelData.setUsers(this.userService.getUsersBetweenLevels(1, 100));
     }
 
@@ -21,6 +23,7 @@ public class MainModel implements Model{
     }
 
     public void loadDeletedUsers() {
+        this.modelData.setDisplayDeletedUserList(true);
         List<User> users = userService.getAllDeletedUsers();
         this.modelData.setUsers(users);
     }
