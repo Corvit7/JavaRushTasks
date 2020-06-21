@@ -16,7 +16,7 @@ public class UsersView implements View {
         for (int i = 0; i < modelData.getUsers().size(); i++) {
             System.out.println("\t" + modelData.getUsers().get(i).toString());
         }
-        System.out.println("===================================================\n");
+        System.out.println("===================================================");
     }
 
     public void fireEventShowAllUsers()
@@ -34,8 +34,6 @@ public class UsersView implements View {
         this.controller = controller;
     }
 
-    public void fireEventOpenUserEditForm(long id) {
-        this.controller.onOpenUserEditForm(id);
-    }
+    public void fireEventOpenUserEditForm(long id) {this.controller.onOpenUserEditForm(id);}
 
 }

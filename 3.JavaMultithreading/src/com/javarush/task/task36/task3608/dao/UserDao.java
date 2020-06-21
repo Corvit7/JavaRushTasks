@@ -41,6 +41,8 @@ public class UserDao {
         return result;
     }
 
+
+
     public List<User> getUsersByLevel(int level) {
         if (level < 1) throw new IllegalArgumentException();
 
