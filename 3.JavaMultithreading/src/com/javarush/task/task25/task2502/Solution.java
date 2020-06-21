@@ -1,5 +1,6 @@
 package com.javarush.task.task25.task2502;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /* 
@@ -16,8 +17,24 @@ public class Solution {
     public static class Car {
         protected List<Wheel> wheels;
 
-        public Car() {
+//        public Car() {
+//            //init wheels here
+//            wheels.add(Wheel.valueOf(loadWheelNamesFromDB()[1]));
+//            wheels.add(Wheel.valueOf(loadWheelNamesFromDB()[2]));
+//            wheels.add(Wheel.valueOf(loadWheelNamesFromDB()[3]));
+//            wheels.add(Wheel.valueOf(loadWheelNamesFromDB()[4]));
+//        }
+
+        public Car() throws Exception {
             //init wheels here
+            wheels = new ArrayList<>();
+            int wheelCount = 0;
+            for (String wheel : loadWheelNamesFromDB()) {
+                wheels.add(Wheel.valueOf(wheel));
+                wheelCount += 1;
+            }
+            if (wheelCount != 4)
+                throw new Exception();
         }
 
         protected String[] loadWheelNamesFromDB() {
