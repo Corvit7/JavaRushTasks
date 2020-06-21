@@ -42,4 +42,11 @@ public class Controller {
         this.editUserView.refresh(this.model.getModelData());
     }
 
+    public void onOpenUserEditForm(long userId) {
+        this.model.loadUserById(userId);
+        this.editUserView.refresh(model.getModelData());
+    }
+
+
+
 }

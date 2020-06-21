@@ -12,24 +12,22 @@ public class Solution {
     public static void main(String[] args) {
         Model model = new MainModel();
         UsersView usersView = new UsersView();
+        EditUserView editUserView = new EditUserView();
         Controller controller = new Controller();
 
         usersView.setController(controller);
+
+        editUserView.setController(controller);
+
         controller.setModel(model);
-
-//        ModelData modelData = new ModelData();
-//        model.loadUsers();
-//        modelData.setUsers(model.getModelData().getUsers());
-//        usersView.refresh(modelData);
-
         controller.setUsersView(usersView);
-//        usersView.fireEventShowAllUsers();
-        usersView.fireEventShowDeletedUsers();
-
-        EditUserView editUserView = new EditUserView();
         controller.setEditUserView(editUserView);
 
-        controller.showEditedUser();
+//        usersView.fireEventShowAllUsers();
+//        usersView.fireEventShowDeletedUsers();
+
+        usersView.fireEventOpenUserEditForm(126L);
+        usersView.fireEventShowDeletedUsers();
 
     }
 }
