@@ -27,5 +27,6 @@ public class Solution {
         target.start();  //RUNNABLE
         Thread.sleep(100);
         //TERMINATED
+//        target.interrupt();
     }
 }
