@@ -7,6 +7,7 @@ public class Teacher extends Human {
 
     private int numberOfStudents;
     private String university;
+    private int course;
 
     public Teacher(String name, int age, int numberOfStudents) {
         super(name, age);
@@ -34,5 +35,9 @@ public class Teacher extends Human {
 
     public void printData() {
         System.out.println("Преподаватель: " + name);
+    }
+
+    public int getCourse() {
+        return course;
     }
 }
