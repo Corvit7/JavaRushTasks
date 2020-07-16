@@ -1,8 +1,6 @@
 package com.javarush.task.task29.task2909.human;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Student extends UniversityPerson {
 //    private List<Human> children = new ArrayList<>();
@@ -28,10 +26,6 @@ public class Student extends UniversityPerson {
     }
 
 
-
-    public void printData() {
-        System.out.println("Студент: " + getName());
-    }
 
     public void incAverageGradeBy01() {
         averageGrade += 0.1;
@@ -66,5 +60,10 @@ public class Student extends UniversityPerson {
 
     public int getCourse() {
         return course;
+    }
+
+    @Override
+    public String getPosition() {
+        return "Студент";
     }
 }
