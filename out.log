@@ -6032,3 +6032,4 @@
 2020-07-17 06:27:29 INFO  ApacheHttpClient.getTask(480) - responseCode = 200
 2020-07-17 06:27:30 INFO  ApacheHttpClient.completed(28) - responseCode = 200
 2020-07-17 06:27:31 INFO  ApacheHttpClient.getTask(480) - responseCode = 200
+2020-07-17 06:27:31 INFO  ApacheHttpClient.sendEvent(527) - responseCode = 200
