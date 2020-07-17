@@ -22,24 +22,30 @@ public class StudentsDataBase {
         System.out.println("Имя: " + student.getName() + " Возраст: " + student.getAge());
     }
 
-    public static void removeStudent(int index) throws IndexOutOfBoundsException {
-        students.remove(index);
+    public static void removeStudent(int index) {
+        try {
+            students.remove(index);
+        } catch (Exception e) {
+
+        }
     }
 
     public static void findDimaOrSasha() {
-        boolean found = false;
+//        boolean found = false;
         for (int i = 0; i < students.size(); i++) {
-            if (!found) {
+//            if (!found) {
                 if (students.get(i).getName().equals("Dima")) {
                     System.out.println("Студент Dima есть в базе.");
-                    found = true;
+                    break;
+//                    found = true;
                 }
 
                 if (students.get(i).getName().equals("Sasha")) {
                     System.out.println("Студент Sasha есть в базе.");
-                    found = true;
+                    break;
+//                    found = true;
                 }
-            }
+//            }
         }
     }
 }
