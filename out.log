@@ -6112,3 +6112,14 @@
 2020-07-18 07:23:28 INFO  ApacheHttpClient.refreshUserInfo(308) - User information received.
 2020-07-18 07:23:28 INFO  ApacheHttpClient.startGA(35) - GAService started.
 2020-07-18 07:23:28 INFO  AbstractRestApiClient.startService(71) - EventsService started.
+2020-07-18 07:23:34 WARN  PluginUtil.getCurrentTask(71) - Error while retrieving the task key.
+2020-07-18 07:23:48 INFO  ApacheHttpClient.getWebResourceAsStream(494) - responseCode = 200
+2020-07-18 07:23:48 INFO  ApacheHttpClient.getFilteredTasks(333) - responseCode = 200
+2020-07-18 07:23:50 INFO  ApacheHttpClient.getFilteredTasks(333) - responseCode = 200
+2020-07-18 07:24:04 INFO  ApacheHttpClient.getWebResourceAsStream(494) - responseCode = 200
+2020-07-18 07:24:04 INFO  ApacheHttpClient.getFilteredTasks(333) - responseCode = 200
+2020-07-18 07:24:09 INFO  ApacheHttpClient.getFilteredTasks(333) - responseCode = 200
+2020-07-18 07:24:11 INFO  ApacheHttpClient.getTaskTemplateInfo(350) - responseCode = 200
+2020-07-18 07:24:11 WARN  PluginUtil.getCurrentTask(71) - Error while retrieving the task key.
+2020-07-18 07:24:14 INFO  ApacheHttpClient.getWebResourceAsStream(494) - responseCode = 200
+2020-07-18 07:24:28 INFO  ApacheHttpClient.sendEvent(527) - responseCode = 200
