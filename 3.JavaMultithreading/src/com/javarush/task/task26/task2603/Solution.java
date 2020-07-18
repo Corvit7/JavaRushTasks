@@ -28,7 +28,7 @@ public class Solution {
 
         private Comparator<T>[] comparators;
 
-        public CustomizedComparator(Comparator... comparators) {
+        public CustomizedComparator(Comparator<T>... comparators) {
             this.comparators = comparators;
         }
 
@@ -48,37 +48,30 @@ public class Solution {
     public static void main(String[] args) {
 
         ArrayList<Woman> women = new ArrayList<Woman>();
-        women.add(new Woman(18, 0, 45, 117, "Ann"));
-        women.add(new Woman(21, 1, 57, 118, "Iren"));
+        women.add(new Woman(18, 0, 45, 110, "Ann"));
+        women.add(new Woman(21, 1, 57, 120, "Iren"));
         women.add(new Woman(5, 0, 60, 110, "Angelina"));
 
         Comparator<Woman> compareByHeight = new Comparator<Woman>() {
 
             public int compare(Woman o1, Woman o2) {
-                return o1.height - o2.height;
+                return o2.height - o1.height;
             }
         };
 
         Comparator<Woman> compareByWeight = new Comparator<Woman>() {
 
             public int compare(Woman o1, Woman o2) {
-                return o1.weight - o2.weight;
+                return o2.weight - o1.weight;
             }
         };
 
-//        ArrayList<Comparator> comparators = new ArrayList<>();
-//        comparators.add(compareByHeight);
-//        comparators.add(compareByWeight);
-        Comparator<Woman>[] comparators = new Comparator[2];
-        comparators[0] = compareByHeight;
-        comparators[1] = compareByWeight;
-
-        CustomizedComparator<Woman> comparator = new CustomizedComparator<>(comparators);
+        CustomizedComparator<Woman> comparator = new CustomizedComparator<>(compareByHeight, compareByWeight);
 
         Collections.sort(women,comparator);
 
-//        for (int i = 0; i < women.size(); i++) {
-//            System.out.println(women.get(i).name);
-//        }
+        for (int i = 0; i < women.size(); i++) {
+            System.out.println(women.get(i).name);
+        }
     }
 }
