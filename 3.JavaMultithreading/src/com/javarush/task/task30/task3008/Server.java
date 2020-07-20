@@ -5,6 +5,35 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Map;
 
+//Чат (11)
+//        Пришло время написать главный метод класса Handler, который будет вызывать все вспомогательные методы, написанные ранее.
+//        Реализуем метод void run() в классе Handler.
+//
+//        Он должен:
+//        1. Выводить сообщение, что установлено новое соединение с удаленным адресом, который можно получить с помощью метода getRemoteSocketAddress().
+//        2. Создавать Connection, используя поле socket.
+//        3. Вызывать метод, реализующий рукопожатие с клиентом, сохраняя имя нового клиента.
+//        4. Рассылать всем участникам чата информацию об имени присоединившегося участника (сообщение с типом USER_ADDED).
+//        Подумай, какой метод подойдет для этого лучше всего.
+//        5. Сообщать новому участнику о существующих участниках.
+//        6. Запускать главный цикл обработки сообщений сервером.
+//        7. Обеспечить закрытие соединения при возникновении исключения.
+//        8. Отловить все исключения типа IOException и ClassNotFoundException, вывести в консоль информацию, что произошла ошибка при обмене данными с удаленным адресом.
+//        9. После того как все исключения обработаны, если п.11.3 отработал и возвратил нам имя, мы должны удалить запись для этого имени из connectionMap и разослать всем остальным участникам сообщение с типом USER_REMOVED и сохраненным именем.
+//        10. Последнее, что нужно сделать в методе run() - вывести сообщение, информирующее что соединение с удаленным адресом закрыто.
+//
+//        Наш сервер полностью готов. Попробуй его запустить.
+//
+//
+//        Требования:
+//        1. Метод run() должен выводить на экран сообщение о том, что было установлено соединение с удаленным адресом (используя метод getRemoteSocketAddress()).
+//        2. Метод run() должен создавать новое соединение (connection) используя в качестве параметра поле socket.
+//        3. Метод run() должен вызывать метод serverHandshake() используя в качестве параметра только что созданное соединение; результатом будет имя пользователя (userName).
+//        4. Метод run() должен вызывать метод sendBroadcastMessage() используя в качестве параметра новое сообщение (MessageType.USER_ADDED, userName).
+//        5. Метод run() должен вызывать метод notifyUsers() используя в качестве параметров connection и userName.
+//        6. Метод run() должен вызывать метод serverMainLoop используя в качестве параметров connection и userName.
+//        7. Прежде чем завершиться, метод run() должен удалять из connectionMap запись соответствующую userName, и отправлять всем участникам чата сообщение о том, что текущий пользователь был удален.
+//        8. Метод run() должен корректно обрабатывать исключения IOException и ClassNotFoundException.
 
 public class Server {
     
@@ -28,7 +57,29 @@ public class Server {
             this.socket = socket;
         }
 
-//        private String serverHandshake(Connection connection) throws IOException, ClassNotFoundException {
+        @Override
+        public void run() {
+            ConsoleHelper.writeMessage(socket.getRemoteSocketAddress().toString());
+            try {
+                Connection connection = new Connection(socket);
+                String userName = serverHandshake(connection);
+                sendBroadcastMessage(new Message(MessageType.USER_ADDED, userName));
+                notifyUsers(connection, userName);
+                serverMainLoop(connection, userName);
+                sendBroadcastMessage(new Message(MessageType.USER_REMOVED, userName));
+                connectionMap.remove(userName);
+                socket.close();
+            } catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+            catch (ClassNotFoundException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        //        private String serverHandshake(Connection connection) throws IOException, ClassNotFoundException {
 //
 //            Message inpMessage = null;
 //            Message outMessage = null;
@@ -94,7 +145,17 @@ public class Server {
 //                    }
 //            }
         }
-        
+
+//        private void serverMainLoop(Connection connection, String userName) throws IOException, ClassNotFoundException
+//        {
+////            "Боб: привет чат".
+//            while (true) {
+//                if (connection.receive().getType() == MessageType.TEXT)
+//                    sendBroadcastMessage(new Message(MessageType.TEXT, userName + ": " + connection.receive().getData()));
+//                else
+//                    connection.send(new Message(MessageType.TEXT, "Неправильный тип сообщения"));
+//            }
+//        }
 
         private void serverMainLoop(Connection connection, String userName) throws IOException, ClassNotFoundException {
 
@@ -117,13 +178,13 @@ public class Server {
             }
 
         }
-
+        
 
 
     }
     public static void main(String[] args) throws IOException {
         Socket socket = null;
-        ConsoleHelper.writeMessage("Введите номер порта на котором хотите поднять сервер6");
+        ConsoleHelper.writeMessage("Введите номер порта на котором хотите поднять сервер");
         ServerSocket serverSocket = new ServerSocket(ConsoleHelper.readInt());
         System.out.println("Server Started");
         try {
