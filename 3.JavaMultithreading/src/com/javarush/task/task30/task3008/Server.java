@@ -1,16 +1,34 @@
 package com.javarush.task.task30.task3008;
 
-import java.io.BufferedReader;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class Server {
 
+    private static class Handler extends Thread {
 
+        private Socket socket;
 
-    public static void main(String[] args) {
-//        String str = ConsoleHelper.readString();
-//        System.out.println(str);
+        public Handler(Socket socket){
+            this.socket = socket;
+        }
+    }
+    public static void main(String[] args) throws IOException {
+        Socket socket;
+        ServerSocket serverSocket = new ServerSocket(ConsoleHelper.readInt());
+        System.out.println("Server Started");
+        try {
+            while (true){
+                socket = serverSocket.accept();
+                Handler handler = new Handler(socket);
+                handler.start();
+            }
 
-        int i = ConsoleHelper.readInt();
-        System.out.println(i);
+        } catch (IOException e) {
+            System.out.println(e);
+            serverSocket.close();
+        }
+
     }
 }
