@@ -5,47 +5,11 @@ import com.javarush.task.task30.task3008.Connection;
 import com.javarush.task.task30.task3008.ConsoleHelper;
 import com.javarush.task.task30.task3008.Message;
 import com.javarush.task.task30.task3008.MessageType;
+import sun.misc.Cleaner;
 
 import java.io.IOException;
 
 public class Client {
-
-
-//    Чат (14)
-//    Приступим к написанию главного функционала класса Client.
-//
-//1. Добавь метод public void run().
-//    Он должен создавать вспомогательный поток SocketThread, ожидать пока тот установит соединение с сервером, а после этого в цикле считывать сообщения с консоли и отправлять их серверу.
-//    Условием выхода из цикла будет отключение клиента или ввод пользователем команды 'exit'.
-//    Для информирования главного потока, что соединение установлено во вспомогательном потоке, используй методы wait() и notify() объекта класса Client.
-//
-//    Реализация метода run должна:
-//    а) Создавать новый сокетный поток с помощью метода getSocketThread().
-//    б) Помечать созданный поток как daemon, это нужно для того, чтобы при выходе из программы вспомогательный поток прервался автоматически.
-//    в) Запустить вспомогательный поток.
-//            г) Заставить текущий поток ожидать, пока он не получит нотификацию из другого потока.
-//            Подсказка: используй wait() и синхронизацию на уровне объекта.
-//    Если во время ожидания возникнет исключение, сообщи об этом пользователю и выйди из программы.
-//            д) После того, как поток дождался нотификации, проверь значение clientConnected.
-//    Если оно true - выведи "Соединение установлено.
-//    Для выхода наберите команду 'exit'.".
-//    Если оно false - выведи "Произошла ошибка во время работы клиента.".
-//    е) Считывай сообщения с консоли пока клиент подключен.
-//    Если будет введена команда 'exit', то выйди из цикла.
-//    ж) После каждого считывания, если метод shouldSendTextFromConsole() возвращает true, отправь считанный текст с помощью метода sendTextMessage().
-//
-//            2. Добавь метод public static void main(String[] args).
-//    Он должен создавать новый объект типа Client и вызывать у него метод run().
-//
-//
-//    Требования:
-//            1. Метод main() должен создавать новый объект типа Client и вызывать у него метод run().
-//            2. Метод run() должен создавать и запускать новый поток, полученный с помощью метода getSocketThread().
-//            3. Поток созданный с помощью метода getSocketThread() должен быть отмечен как демон (setDaemon(true)).
-//            4. После запуска нового socketThread метод run() должен ожидать до тех пор, пока не будет пробужден.
-//            5. До тех пор, пока флаг clientConnected равен true,с консоли должны считываться сообщения с помощью метода ConsoleHelper.readString().
-//            6. Если была введена команда "exit" цикл считывания сообщений должен быть прерван.
-//            7. Если метод shouldSentTextFromConsole() возвращает true, должен быть вызван метод sendTextMessage() со считанным текстом в качестве параметра.
 
     protected Connection connection;
     private volatile boolean clientConnected = false;
@@ -91,6 +55,24 @@ public class Client {
         return new SocketThread();
     }
 
+
+//    public void run() {
+//        SocketThread socketThread = new SocketThread();
+//        socketThread.setDaemon(true);
+//        socketThread.start();
+//
+//        synchronized (this) {
+//
+//            while (clientConnected) {
+//                String inp = ConsoleHelper.readString();
+//                if (inp.equals("exit"))
+//                    clientConnected = false;
+//                if (shouldSendTextFromConsole())
+//                    sendTextMessage(inp);
+//            }
+//        }
+//    }
+
     public void run(){
         SocketThread socketThread = getSocketThread();
         socketThread.setDaemon(true);
@@ -117,6 +99,52 @@ public class Client {
 
     }
 
-    public class SocketThread extends Thread{}
+//    Чат (15)
+//    Напишем реализацию класса SocketThread.
+//    Начнем с простых вспомогательных методов.
+//
+//    Добавь методы, которые будут доступны классам потомкам и не доступны остальным классам вне пакета:
+//            1) void processIncomingMessage(String message) - должен выводить текст message в консоль.
+//            2) void informAboutAddingNewUser(String userName) - должен выводить в консоль информацию о том, что участник с именем userName присоединился к чату.
+//            3) void informAboutDeletingNewUser(String userName) - должен выводить в консоль, что участник с именем userName покинул чат.
+//            4) void notifyConnectionStatusChanged(boolean clientConnected) - этот метод должен:
+//    а) Устанавливать значение поля clientConnected внешнего объекта Client в соответствии с переданным параметром.
+//    б) Оповещать (пробуждать ожидающий) основной поток класса Client.
+//
+//    Подсказка: используй синхронизацию на уровне текущего объекта внешнего класса и метод notify().
+//    Для класса SocketThread внешним классом является класс Client.
+//
+//
+//    Требования:
+//            1. Метод processIncomingMessage() должен выводить на экран сообщение полученное в качестве параметра.
+//            2. Метод informAboutAddingNewUser() должен выводить на экран сообщение о том что пользователь подключился к чату.
+//            3. Метод informAboutDeletingNewUser() должен выводить на экран сообщение о том что пользователь покинул чат.
+//            4. Метод notifyConnectionStatusChanged() должен устанавливать значение поля clientConnected внешнего объекта Client равным полученному параметру.
+//            5. Метод notifyConnectionStatusChanged() должен вызвать метод notify() на внешнем объекте Client.
+    public class SocketThread extends Thread{
+        protected void processIncomingMessage(String message)
+        {
+            ConsoleHelper.writeMessage(message);
+        }
+
+        protected void informAboutAddingNewUser(String userName)
+        {
+            ConsoleHelper.writeMessage(userName + "присоединился к чату");
+        }
+
+        protected void informAboutDeletingNewUser(String userName)
+        {
+            ConsoleHelper.writeMessage(userName + "покинлу чат");
+        }
+
+        protected void notifyConnectionStatusChanged(boolean clientConnected)
+        {
+            synchronized (Client.this) {
+                Client.this.clientConnected = clientConnected;
+                Client.this.notify();
+            }
+        }
+
+    }
 
 }
