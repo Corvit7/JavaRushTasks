@@ -8,6 +8,8 @@ import com.javarush.task.task30.task3008.MessageType;
 import sun.misc.Cleaner;
 
 import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class Client {
 
@@ -99,42 +101,6 @@ public class Client {
 
     }
 
-//    Чат (16)
-//    Теперь все готово, чтобы дописать необходимые методы класса SocketThread.
-//
-//            1) Добавь protected метод clientHandshake() throws IOException, ClassNotFoundException.
-//            Этот метод будет представлять клиента серверу.
-//
-//    Он должен:
-//    а) В цикле получать сообщения, используя соединение connection.
-//    б) Если тип полученного сообщения NAME_REQUEST (сервер запросил имя), запросить ввод имени пользователя с помощью метода getUserName(), создать новое сообщение с типом MessageType.USER_NAME и введенным именем, отправить сообщение серверу.
-//    в) Если тип полученного сообщения MessageType.NAME_ACCEPTED (сервер принял имя), значит сервер принял имя клиента, нужно об этом сообщить главному потоку, он этого очень ждет.
-//    Сделай это с помощью метода notifyConnectionStatusChanged(), передав в него true.
-//    После этого выйди из метода.
-//            г) Если пришло сообщение с каким-либо другим типом, кинь исключение IOException("Unexpected MessageType").
-//
-//            2) Добавь protected метод void clientMainLoop() throws IOException, ClassNotFoundException.
-//
-//            Этот метод будет реализовывать главный цикл обработки сообщений сервера. Внутри метода:
-//    а) Получи сообщение от сервера, используя соединение connection.
-//    б) Если это текстовое сообщение (тип MessageType.TEXT), обработай его с помощью метода processIncomingMessage().
-//    в) Если это сообщение с типом MessageType.USER_ADDED, обработай его с помощью метода informAboutAddingNewUser().
-//    г) Если это сообщение с типом MessageType.USER_REMOVED, обработай его с помощью метода informAboutDeletingNewUser().
-//    д) Если клиент получил сообщение какого-либо другого типа, брось исключение IOException("Unexpected MessageType").
-//    е) Размести код из предыдущих пунктов внутри бесконечного цикла.
-//    Цикл будет завершен автоматически если произойдет ошибка (будет брошено исключение) или поток, в котором работает цикл, будет прерван.
-//
-//
-//    Требования:
-//            1. Метод clientHandshake() должен отправлять новое сообщение (MessageType.USER_NAME, getUserName()) используя connection, если тип принятого сообщения равен MessageType.NAME_REQUEST.
-//2. Метод clientHandshake() должен вызывать метод notifyConnectionStatusChanged(true) и завершаться, если тип принятого сообщения равен MessageType.NAME_ACCEPTED.
-//3. Метод clientHandshake() должен бросать исключение IOException, если тип принятого сообщения не MessageType.NAME_ACCEPTED или не MessageType.NAME_REQUEST.
-//4. Метод clientHandshake() должен принимать сообщения от сервера до тех пор, пока тип сообщения равен MessageType.NAME_REQUEST.
-//5. Метод clientMainLoop() должен принимать сообщения от сервера до тех пор, пока тип сообщения равен MessageType.TEXT, MessageType.USER_REMOVED или MessageType.USER_ADDED.
-//6. Метод clientMainLoop() должен обрабатывать полученное сообщение с помощью метода processIncomingMessage(), если тип принятого сообщения равен MessageType.TEXT.
-//7. Метод clientMainLoop() должен обрабатывать полученное сообщение с помощью метода informAboutAddingNewUser(), если тип принятого сообщения равен MessageType.USER_ADDED.
-//8. Метод clientMainLoop() должен обрабатывать полученное сообщение с помощью метода informAboutDeletingNewUser(), если тип принятого сообщения равен MessageType.USER_REMOVED.
-//9. Метод clientMainLoop() должен бросать исключение IOException, если тип принятого сообщения не MessageType.TEXT, MessageType.USER_REMOVED или не MessageType.USER_ADDED.
     public class SocketThread extends Thread{
         protected void processIncomingMessage(String message)
         {
@@ -143,12 +109,12 @@ public class Client {
 
         protected void informAboutAddingNewUser(String userName)
         {
-            ConsoleHelper.writeMessage(userName + "присоединился к чату");
+            ConsoleHelper.writeMessage(userName + " присоединился к чату");
         }
 
         protected void informAboutDeletingNewUser(String userName)
         {
-            ConsoleHelper.writeMessage(userName + "покинлу чат");
+            ConsoleHelper.writeMessage(userName + " покинул чат");
         }
 
         protected void notifyConnectionStatusChanged(boolean clientConnected)
@@ -198,6 +164,75 @@ public class Client {
             }
         }
 
-    }
+//    Чат (17)
+//    Последний, но самый главный метод класса SocketThread - это метод void run().
+//    Добавь его. Его реализация с учетом уже созданных методов выглядит очень просто.
+//
+//    Давай напишем ее:
+//            1) Запроси адрес и порт сервера с помощью методов getServerAddress() и getServerPort().
+//            2) Создай новый объект класса java.net.Socket, используя данные, полученные в предыдущем пункте.
+//3) Создай объект класса Connection, используя сокет из п.17.2.
+//            4) Вызови метод, реализующий "рукопожатие" клиента с сервером (clientHandshake()).
+//            5) Вызови метод, реализующий основной цикл обработки сообщений сервера.
+//6) При возникновении исключений IOException или ClassNotFoundException сообщи главному потоку о проблеме, используя notifyConnectionStatusChanged() и false в качестве параметра.
+//
+//    Клиент готов, можешь запустить сервер, несколько клиентов и проверить как все работает.
+//
+//
+//    Требования:
+//            1. В методе run() должно быть установлено и сохранено в поле connection соединение с сервером (для получения адреса сервера и порта используй методы getServerAddress() и getServerPort()).
+//            2. В методе run() должен быть вызван метод clientHandshake().
+//            3. В методе run() должен быть вызван метод clientMainLoop().
+//            4. При возникновении исключений IOException или ClassNotFoundException в процессе работы метода run(), должен быть вызван метод notifyConnectionStatusChanged() с параметром false.
+//            5. Заголовок метода run() должен соответствовать условию задачи.
+
+
+//    @Override
+//    public void run() {
+//        try {
+//            Socket socket = new Socket(getServerAddress(), getServerPort());
+//            Connection connection = new Connection(socket);
+//            clientHandshake();
+//            clientMainLoop();
+//        } catch (UnknownHostException e)
+//        {
+//            e.printStackTrace();
+//        }
+//        catch (IOException e)
+//        {
+//            notifyConnectionStatusChanged(false);
+//            e.printStackTrace();
+//        }
+//        catch (ClassNotFoundException e)
+//        {
+//            notifyConnectionStatusChanged(false);
+//            e.printStackTrace();
+//        }
+//    }
+
+        @Override
+        public void run() {
+            String adressServer = getServerAddress();
+            int port = getServerPort();
+
+            Socket socket = null;
+
+            try {
+                socket = new Socket(adressServer, port);
+                Connection connection = new Connection(socket);
+                Client.this.connection = connection;
+                    clientHandshake();
+                    clientMainLoop();
+
+            } catch (IOException e) {
+//                e.printStackTrace( );
+                notifyConnectionStatusChanged(false);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+                notifyConnectionStatusChanged(false);
+            }
+        }
+
+}
 
 }

@@ -189,7 +189,7 @@ public class Server {
         System.out.println("Server Started");
         try {
             while (true){
-                ConsoleHelper.writeMessage("ожидаю новых подключений. нажмите любую клавишу");
+                ConsoleHelper.writeMessage("ожидаю новых подключений");
                 socket = serverSocket.accept();
                 Handler handler = new Handler(socket);
                 handler.start();
