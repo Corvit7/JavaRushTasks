@@ -4,25 +4,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-
-//Класс Handler должен реализовывать протокол общения с клиентом.
-//        Выделим из протокола отдельные этапы и реализуем их с помощью отдельных методов:
-//
-//        Этап первый - это этап рукопожатия (знакомства сервера с клиентом).
-//        Реализуем его с помощью приватного метода String serverHandshake(Connection connection) throws IOException, ClassNotFoundException.
-//        Метод в качестве параметра принимает соединение connection, а возвращает имя нового клиента.
-//
-//        Реализация метода должна:
-//        1) Сформировать и отправить команду запроса имени пользователя
-//        2) Получить ответ клиента
-//        3) Проверить, что получена команда с именем пользователя
-//        4) Достать из ответа имя, проверить, что оно не пустое и пользователь с таким именем еще не подключен (используй connectionMap)
-//        5) Добавить нового пользователя и соединение с ним в connectionMap
-//        6) Отправить клиенту команду информирующую, что его имя принято
-//        7) Если какая-то проверка не прошла, заново запросить имя клиента
-//        8) Вернуть принятое имя в качестве возвращаемого значения
 
 
 public class Server {
@@ -89,6 +70,29 @@ public class Server {
             connection.send(new Message(MessageType.NAME_ACCEPTED));
 
             return name;
+        }
+
+
+
+
+        private void notifyUsers(Connection connection, String userName) throws IOException {
+
+            connectionMap.forEach((k,v)-> {
+                        try {
+                            if (!k.equals(userName)) connection.send(new Message(MessageType.USER_ADDED, k));
+                        } catch (IOException e) {
+                        }
+                    });
+//            for (Map.Entry<String, Connection> entry: connectionMap.entrySet()
+//                 ) {
+//                if(!userName.equals(entry.getKey()))
+//                    try {
+//                        connection.send(new Message(MessageType.USER_ADDED, userName));
+//                    } catch (IOException e)
+//                    {
+//                        e.printStackTrace();
+//                    }
+//            }
         }
 
 
