@@ -5,11 +5,9 @@ import com.javarush.task.task30.task3008.Connection;
 import com.javarush.task.task30.task3008.ConsoleHelper;
 import com.javarush.task.task30.task3008.Message;
 import com.javarush.task.task30.task3008.MessageType;
-import sun.misc.Cleaner;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class Client {
 
@@ -57,24 +55,6 @@ public class Client {
         return new SocketThread();
     }
 
-
-//    public void run() {
-//        SocketThread socketThread = new SocketThread();
-//        socketThread.setDaemon(true);
-//        socketThread.start();
-//
-//        synchronized (this) {
-//
-//            while (clientConnected) {
-//                String inp = ConsoleHelper.readString();
-//                if (inp.equals("exit"))
-//                    clientConnected = false;
-//                if (shouldSendTextFromConsole())
-//                    sendTextMessage(inp);
-//            }
-//        }
-//    }
-
     public void run(){
         SocketThread socketThread = getSocketThread();
         socketThread.setDaemon(true);
@@ -95,7 +75,8 @@ public class Client {
             if(data.equals("exit")){
                 break;
             }else{
-                if(shouldSendTextFromConsole())sendTextMessage(data);
+                if(shouldSendTextFromConsole())
+                    sendTextMessage(data);
             }
         }
 
@@ -163,52 +144,6 @@ public class Client {
                     throw new IOException("Unexpected MessageType");
             }
         }
-
-//    Чат (17)
-//    Последний, но самый главный метод класса SocketThread - это метод void run().
-//    Добавь его. Его реализация с учетом уже созданных методов выглядит очень просто.
-//
-//    Давай напишем ее:
-//            1) Запроси адрес и порт сервера с помощью методов getServerAddress() и getServerPort().
-//            2) Создай новый объект класса java.net.Socket, используя данные, полученные в предыдущем пункте.
-//3) Создай объект класса Connection, используя сокет из п.17.2.
-//            4) Вызови метод, реализующий "рукопожатие" клиента с сервером (clientHandshake()).
-//            5) Вызови метод, реализующий основной цикл обработки сообщений сервера.
-//6) При возникновении исключений IOException или ClassNotFoundException сообщи главному потоку о проблеме, используя notifyConnectionStatusChanged() и false в качестве параметра.
-//
-//    Клиент готов, можешь запустить сервер, несколько клиентов и проверить как все работает.
-//
-//
-//    Требования:
-//            1. В методе run() должно быть установлено и сохранено в поле connection соединение с сервером (для получения адреса сервера и порта используй методы getServerAddress() и getServerPort()).
-//            2. В методе run() должен быть вызван метод clientHandshake().
-//            3. В методе run() должен быть вызван метод clientMainLoop().
-//            4. При возникновении исключений IOException или ClassNotFoundException в процессе работы метода run(), должен быть вызван метод notifyConnectionStatusChanged() с параметром false.
-//            5. Заголовок метода run() должен соответствовать условию задачи.
-
-
-//    @Override
-//    public void run() {
-//        try {
-//            Socket socket = new Socket(getServerAddress(), getServerPort());
-//            Connection connection = new Connection(socket);
-//            clientHandshake();
-//            clientMainLoop();
-//        } catch (UnknownHostException e)
-//        {
-//            e.printStackTrace();
-//        }
-//        catch (IOException e)
-//        {
-//            notifyConnectionStatusChanged(false);
-//            e.printStackTrace();
-//        }
-//        catch (ClassNotFoundException e)
-//        {
-//            notifyConnectionStatusChanged(false);
-//            e.printStackTrace();
-//        }
-//    }
 
         @Override
         public void run() {
