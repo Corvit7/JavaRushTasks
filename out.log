@@ -12515,3 +12515,10 @@ java.lang.NullPointerException
 2020-07-27 13:05:09 INFO  ApacheHttpClient.getFilteredTasks(333) - responseCode = 200
 2020-07-27 13:05:11 INFO  ApacheHttpClient.getTaskTemplateInfo(350) - responseCode = 200
 2020-07-27 13:05:11 INFO  ApacheHttpClient.getWebResourceAsStream(494) - responseCode = 200
+2020-07-27 13:05:46 INFO  ApacheHttpClient.sendEvent(527) - responseCode = 200
+2020-07-27 13:06:43 INFO  ApacheHttpClient.getWebResourceAsStream(494) - responseCode = 200
+2020-07-27 13:06:43 INFO  ApacheHttpClient.getWebResourceAsStream(494) - responseCode = 200
+2020-07-27 13:06:44 INFO  ApacheHttpClient.getTask(480) - responseCode = 200
+2020-07-27 13:06:44 INFO  ApacheHttpClient.completed(28) - responseCode = 200
+2020-07-27 13:06:45 INFO  ApacheHttpClient.getTask(480) - responseCode = 200
+2020-07-27 13:06:46 INFO  ApacheHttpClient.sendEvent(527) - responseCode = 200
