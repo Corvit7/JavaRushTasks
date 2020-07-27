@@ -21,8 +21,9 @@ public class Solution {
     }
 
     static boolean isSubstringPresent(String substring, String string) {
-        boolean found = true;
-        found = string.contains(substring);
+//        boolean found = true;
+//        found = string.contains(substring);
+//        return found;
 //        int max = string.length() - substring.length();
 //        label:
 //        for (int i = 0; i <= max; i++) {
@@ -38,7 +39,12 @@ public class Solution {
 //            found = true;
 //            break label;
 //        }
-        return found;
+
+        for (int i = 0; i <= string.length()-substring.length(); i++)
+            for (int j = i; string.charAt(j)==substring.charAt(j-i) ; j++)
+                if (j==i+substring.length()-1) return true;
+        return false;
+
     }
 }
 
