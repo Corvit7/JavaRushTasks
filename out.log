@@ -13724,3 +13724,25 @@ java.lang.NullPointerException
 2020-07-28 10:17:48 INFO  ApacheHttpClient.completed(28) - responseCode = 200
 2020-07-28 10:17:48 INFO  ApacheHttpClient.getTask(480) - responseCode = 200
 2020-07-28 10:18:07 INFO  ApacheHttpClient.sendEvent(527) - responseCode = 200
+2020-07-28 10:18:25 INFO  ApacheHttpClient.getWebResourceAsStream(494) - responseCode = 200
+2020-07-28 10:18:25 INFO  ApacheHttpClient.getFilteredTasks(333) - responseCode = 200
+2020-07-28 10:18:27 INFO  ApacheHttpClient.getTaskTemplateInfo(350) - responseCode = 200
+2020-07-28 10:18:28 INFO  ApacheHttpClient.getWebResourceAsStream(494) - responseCode = 200
+2020-07-28 10:19:07 INFO  ApacheHttpClient.sendEvent(527) - responseCode = 200
+2020-07-28 10:20:07 INFO  ApacheHttpClient.sendEvent(527) - responseCode = 200
+2020-07-28 10:20:07 INFO  ApacheHttpClient.getWebResourceAsStream(494) - responseCode = 200
+2020-07-28 10:20:07 INFO  ApacheHttpClient.getWebResourceAsStream(494) - responseCode = 200
+2020-07-28 10:20:07 INFO  ApacheHttpClient.getTask(480) - responseCode = 200
+2020-07-28 10:20:07 INFO  ApacheHttpClient.completed(28) - responseCode = 200
+2020-07-28 10:20:07 ERROR TaskCompleted.run(136) - Exception during task verification. : java.lang.NullPointerException
+2020-07-28 10:20:48 INFO  ApacheHttpClient.getWebResourceAsStream(494) - responseCode = 200
+2020-07-28 10:20:49 INFO  ApacheHttpClient.getWebResourceAsStream(494) - responseCode = 200
+2020-07-28 10:20:49 INFO  ApacheHttpClient.getTask(480) - responseCode = 200
+2020-07-28 10:20:49 INFO  ApacheHttpClient.completed(28) - responseCode = 200
+2020-07-28 10:20:49 ERROR TaskCompleted.run(136) - Exception during task verification. : java.lang.NullPointerException
+2020-07-28 10:21:07 INFO  ApacheHttpClient.sendEvent(527) - responseCode = 200
+2020-07-28 10:21:43 INFO  ApacheHttpClient.getWebResourceAsStream(494) - responseCode = 200
+2020-07-28 10:21:43 INFO  ApacheHttpClient.getWebResourceAsStream(494) - responseCode = 200
+2020-07-28 10:21:43 INFO  ApacheHttpClient.getTask(480) - responseCode = 200
+2020-07-28 10:21:44 INFO  ApacheHttpClient.completed(28) - responseCode = 200
+2020-07-28 10:21:44 INFO  ApacheHttpClient.getTask(480) - responseCode = 200
