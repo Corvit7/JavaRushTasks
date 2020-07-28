@@ -12,12 +12,16 @@ public class Archiver {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Введите путь к архиву:");
         try{
-            String sringPath = bufferedReader.readLine();
-            Path path = Paths.get(sringPath);
+            String stringPath;
+            Path path;
+            stringPath = bufferedReader.readLine();
+            path= Paths.get(stringPath);
+//            path = Paths.get("E:\\фото\\test_arch");
             ZipFileManager zipFileManager= new ZipFileManager(path);
             System.out.println("Введите путь к архивируемому файлу:");
-            sringPath = bufferedReader.readLine();
-            path = Paths.get(sringPath);
+            stringPath = bufferedReader.readLine();
+            path = Paths.get(stringPath);
+//            path = Paths.get("E:\\фото\\test_file.txt");
             zipFileManager.createZip(path);
         } catch (IOException e)
         {
