@@ -34,13 +34,13 @@ public class Archiver {
             e.printStackTrace();
         }
 
-        ExitCommand exitCommand = new ExitCommand();
-        try
-        {
-            exitCommand.execute();
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+//        ExitCommand exitCommand = new ExitCommand();
+//        try
+//        {
+//            exitCommand.execute();
+//        } catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
     }
 }
