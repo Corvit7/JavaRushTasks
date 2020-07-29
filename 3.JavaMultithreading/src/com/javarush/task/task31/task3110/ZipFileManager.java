@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -53,6 +53,32 @@ public class ZipFileManager {
         }
     }
 
+    public List<FileProperties> getFilesList() throws Exception {
+        // Проверяем существует ли zip файл
+        if (!Files.isRegularFile(zipFile)) {
+            throw new WrongZipFileException();
+        }
+
+        List<FileProperties> files = new ArrayList<>();
+
+        try (ZipInputStream zipInputStream = new ZipInputStream(Files.newInputStream(zipFile))) {
+            ZipEntry zipEntry = zipInputStream.getNextEntry();
+
+            while (zipEntry != null) {
+                // Поля "размер" и "сжатый размер" не известны, пока элемент не будет прочитан
+                // Давайте вычитаем его в какой-то выходной поток
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                copyData(zipInputStream, baos);
+
+                FileProperties file = new FileProperties(zipEntry.getName(), zipEntry.getSize(), zipEntry.getCompressedSize(), zipEntry.getMethod());
+                files.add(file);
+                zipEntry = zipInputStream.getNextEntry();
+            }
+        }
+
+        return files;
+    }
+
     private void addNewZipEntry(ZipOutputStream zipOutputStream, Path filePath, Path fileName) throws Exception {
         Path fullPath = filePath.resolve(fileName);
         try (InputStream inputStream = Files.newInputStream(fullPath)) {
@@ -72,42 +98,5 @@ public class ZipFileManager {
         while ((len = in.read(buffer)) > 0) {
             out.write(buffer, 0, len);
         }
-    }
-
-//    1. Добавь метод List<FileProperties> getFilesList() throws Exception в класс ZipFileManager
-//2. Внутри метода проверь является ли содержимое zipFile обычным файлом с помощью подходящего метода класса Files. Если это не файл, брось исключение WrongZipFileException().
-//            3. Создай список с элементами типа FileProperties, в него мы будем складывать свойства файлов
-//4. Создай входящий поток ZipInputStream, для файла из переменной zipFile.
-//    Как и в прошлые разы, оберни его создание в try-with-resources
-//5. Пройдись по всем элементам ZipEntry потока ZipInputStream
-//6. Для каждого элемента ZipEntry вычитай его содержимое, иначе у нас не будет информации о его размере.
-//    Нельзя узнать размер файла в архиве, не вычитав его. Это очень легко сделать с помощью функции copyData, используя временный буфер типа ByteArrayOutputStream.
-//            7. Получи имя, размер, сжатый размер и метод сжатия элемента архива. Посмотри, что еще можно узнать о нем.
-//            8. Создай объект класса FileProperties, используя полученные данные о файле.
-//            9. Добавь созданный объект из п.8 в список из п.3
-//            10. После выхода из цикла верни собранную информацию вызвавшему методу.
-//
-
-    public List<FileProperties> getFilesList() throws Exception
-    {
-        if(!Files.isRegularFile(zipFile))
-            throw new WrongZipFileException();
-
-        List<FileProperties> filePropertiesList = new LinkedList<>();
-        try(ZipInputStream zipInputStream = new ZipInputStream(Files.newInputStream(zipFile)))
-        {
-            ZipEntry zipEntry;
-            while ((zipEntry = zipInputStream.getNextEntry()) != null)
-            {
-                ByteArrayOutputStream tempBuf = new ByteArrayOutputStream();
-                copyData(zipInputStream, tempBuf);
-                FileProperties fileProperties = new FileProperties(zipEntry.getName(), zipEntry.getSize(),
-                        zipEntry.getCompressedSize(),zipEntry.getMethod());
-                filePropertiesList.add(fileProperties);
-                tempBuf.close();
-            }
-        }
-
-        return filePropertiesList;
     }
 }
