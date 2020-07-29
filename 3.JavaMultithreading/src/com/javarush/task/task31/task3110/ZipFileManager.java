@@ -60,25 +60,17 @@ public class ZipFileManager {
 
         if(Files.isRegularFile(source))
             addNewZipEntry(zipOutputStream, source.getParent(), source.getFileName());
-//        else if (Files.isDirectory(source))
-//        {
-//            FileManager fileManager = new FileManager(source);
-//            List<Path> fileNames = fileManager.getFileList();
-//            Iterator<Path> iterator = fileNames.iterator();
-//            while(iterator.hasNext()) {
-//                Path current = iterator.next();
-////                addNewZipEntry(zipOutputStream, current.getParent().relativize(fileManager.getRootPath()), current.getFileName());
-//                addNewZipEntry(zipOutputStream, current.getParent(), current.getFileName());
-//            }
-//        }
-//        else throw new PathIsNotFoundException();
-        else if (Files.isDirectory(source)) {
+        else if (Files.isDirectory(source))
+        {
             FileManager fileManager = new FileManager(source);
             List<Path> fileNames = fileManager.getFileList();
-            for (Path entry : fileNames) {
-                addNewZipEntry(zipOutputStream, entry.getParent(), entry.getFileName());
+            Iterator<Path> iterator = fileNames.iterator();
+            while(iterator.hasNext()) {
+                Path current = iterator.next();
+                addNewZipEntry(zipOutputStream, source, current);
             }
-        } else throw new PathIsNotFoundException();
+        }
+        else throw new PathIsNotFoundException();
 
         zipOutputStream.close();
 
@@ -111,8 +103,7 @@ public class ZipFileManager {
 //                zipOutputStream.write(buffer,0,bufLength);
 //            }
             copyData(is, zipOutputStream);
-            zipOutputStream.finish();
-//            zipOutputStream.close();
+            zipOutputStream.closeEntry();
         }
     }
 
@@ -129,17 +120,17 @@ public class ZipFileManager {
     }
 
 //  для тестов
-    public static void main(String[] args) throws Exception {
-        ZipFileManager zipFileManager = new ZipFileManager(Paths.get("G:\\TEST_DIR\\test_arch.zip"));
-        zipFileManager.createZip(Paths.get("G:\\TEST_DIR\\фото"));
-//        FileManager fileManager = new FileManager(Paths.get("G:\\TEST_DIR\\фото"));
-//        fileManager.getFileList();
-//        List<Path> fileNames = fileManager.getFileList();
-//        Iterator<Path> iterator = fileNames.iterator();
-//        while(iterator.hasNext()) {
-//            Path current = iterator.next();
-//            System.out.println(current.getFileName());;
-//        }
-    }
+//    public static void main(String[] args) throws Exception {
+//        ZipFileManager zipFileManager = new ZipFileManager(Paths.get("G:\\TEST_DIR\\test_arch.zip"));
+//        zipFileManager.createZip(Paths.get("G:\\TEST_DIR\\фото"));
+////        FileManager fileManager = new FileManager(Paths.get("G:\\TEST_DIR\\фото"));
+////        fileManager.getFileList();
+////        List<Path> fileNames = fileManager.getFileList();
+////        Iterator<Path> iterator = fileNames.iterator();
+////        while(iterator.hasNext()) {
+////            Path current = iterator.next();
+////            System.out.println(current.getFileName());;
+////        }
+//    }
 
 }
