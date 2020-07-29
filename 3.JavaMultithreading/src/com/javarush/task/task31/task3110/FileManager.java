@@ -1,51 +1,82 @@
 package com.javarush.task.task31.task3110;
 
-        import java.io.IOException;
-        import java.nio.file.DirectoryStream;
-        import java.nio.file.Files;
-        import java.nio.file.Path;
-//        import java.nio.file.Paths;
-//        import java.util.Iterator;
-        import java.util.LinkedList;
-        import java.util.List;
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+
+//public class FileManager {
+//    private Path rootPath;
+//    private List<Path> fileList;
+//
+//    public FileManager(Path rootPath) throws IOException {
+//        this.rootPath = rootPath;
+//        this.fileList = new ArrayList<>();
+//        collectFileList(rootPath);
+//    }
+//
+//    public List<Path> getFileList() {
+//        return fileList;
+//    }
+//
+//    private void collectFileList(Path path) throws IOException {
+//        // Добавляем только файлы
+//        if (Files.isRegularFile(path)) {
+//            Path relativePath = rootPath.relativize(path);
+//            fileList.add(relativePath);
+//        }
+//
+//        // Добавляем содержимое директории
+//        if (Files.isDirectory(path)) {
+//            // Рекурсивно проходимся по всему содержмому директории
+//            // Чтобы не писать код по вызову close для DirectoryStream, обернем вызов newDirectoryStream в try-with-resources
+//            try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path)) {
+//                for (Path file : directoryStream) {
+//                    collectFileList(file);
+//                }
+//            }
+//        }
+//    }
+//
+//    public Path getRootPath()
+//    {
+//        return rootPath;
+//    }
+//}
+
 
 public class FileManager {
-
     private Path rootPath;
+    private List<Path> fileList;
+
+    public FileManager(Path rootPath) throws IOException {
+        this.rootPath = rootPath;
+        this.fileList = new ArrayList<>();
+        collectFileList(rootPath);
+    }
 
     public List<Path> getFileList() {
         return fileList;
     }
 
-    private List<Path> fileList;
-
-    public FileManager(Path rootPath) throws IOException{
-        this.rootPath=rootPath;
-        fileList = new LinkedList<>();
-        collectFileList(rootPath);
-    }
-
     private void collectFileList(Path path) throws IOException {
-        if (Files.isRegularFile(path))
-            fileList.add(rootPath.relativize(path));
-        else if (Files.isDirectory(path)) {
-            try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
-                for (Path p : stream) {
-                    collectFileList(p);
+        // Добавляем только файлы
+        if (Files.isRegularFile(path)) {
+            Path relativePath = rootPath.relativize(path);
+            fileList.add(relativePath);
+        }
+
+        // Добавляем содержимое директории
+        if (Files.isDirectory(path)) {
+            // Рекурсивно проходимся по всему содержмому директории
+            // Чтобы не писать код по вызову close для DirectoryStream, обернем вызов newDirectoryStream в try-with-resources
+            try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(path)) {
+                for (Path file : directoryStream) {
+                    collectFileList(file);
                 }
             }
         }
     }
-
-//    для тестирования collectFileList
-//    public static void main(String[] args) throws IOException {
-//        Path rootPath = Paths.get("E:\\");
-//        Path path = Paths.get("E:\\фото\\");
-//        FileManager fileManager = new FileManager(rootPath);
-//        fileManager.collectFileList(path);
-//
-//        for (Iterator<Path> it = fileManager.getFileList().iterator(); it.hasNext();) {
-//            System.out.println(it.next());
-//        }
-//    }
 }
