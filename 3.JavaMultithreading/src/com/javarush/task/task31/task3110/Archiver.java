@@ -1,5 +1,6 @@
 package com.javarush.task.task31.task3110;
 
+import com.javarush.task.task31.task3110.command.Command;
 import com.javarush.task.task31.task3110.exception.WrongZipFileException;
 
 import java.io.IOException;
@@ -15,11 +16,17 @@ public class Archiver {
             } catch (WrongZipFileException e) {
                 ConsoleHelper.writeMessage("Вы не выбрали файл архива или выбрали неверный файл.");
             } catch (Exception e) {
-//                ConsoleHelper.writeMessage("Произошла ошибка. Проверьте введенные данные.");
                 e.printStackTrace();
             }
 
         } while (operation != Operation.EXIT);
+//        try {
+//            CommandExecutor.execute(Operation.CREATE);
+//            CommandExecutor.execute(Operation.REMOVE);
+//        } catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
     }
 
 
