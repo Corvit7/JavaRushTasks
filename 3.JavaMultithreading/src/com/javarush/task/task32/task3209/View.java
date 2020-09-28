@@ -9,9 +9,6 @@ import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-
 
 public class View extends JFrame implements ActionListener {
     private Controller controller;
@@ -136,5 +133,13 @@ public class View extends JFrame implements ActionListener {
     public void resetUndo()
     {
         undoManager.discardAllEdits();
+    }
+
+    public boolean isHtmlTabSelected()
+    {
+        if(tabbedPane.getSelectedIndex() == 0)
+            return true;
+        else
+            return false;
     }
 }
