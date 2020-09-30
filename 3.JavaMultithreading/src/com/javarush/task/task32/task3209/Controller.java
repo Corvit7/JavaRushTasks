@@ -36,8 +36,13 @@ public class Controller {
         view.setController(controller);
         view.init();
         controller.init();
+        view.showAbout();
 
     }
 
     public void init(){}
+
+    public HTMLDocument getDocument() {
+        return document;
+    }
 }
