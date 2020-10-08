@@ -145,9 +145,7 @@ public class View extends JFrame implements ActionListener {
     }
 
     public void selectHtmlTab(){
-        //this.getContentPane().getComponent(0).setEnabled(true);
         this.tabbedPane.setSelectedIndex(0);
-        //htmlTextPane.setVisible(true);
         this.resetUndo();
     }
 
@@ -160,21 +158,5 @@ public class View extends JFrame implements ActionListener {
     {
         JOptionPane.showMessageDialog(this.tabbedPane, "Some Info", "About", JOptionPane.INFORMATION_MESSAGE);
 
-//        JDialog d;
-//        JFrame f = new JFrame();
-//        d = new JDialog(f , "Dialog Example", true);
-//        d.setLayout( new FlowLayout() );
-//        JButton b = new JButton ("OK");
-//        b.addActionListener ( new ActionListener()
-//        {
-//            public void actionPerformed( ActionEvent e )
-//            {
-//                d.setVisible(false);
-//            }
-//        });
-//        d.add( new JLabel ("Click button to continue."));
-//        d.add(b);
-//        d.setSize(300,300);
-//        d.setVisible(true);
     }
 }
