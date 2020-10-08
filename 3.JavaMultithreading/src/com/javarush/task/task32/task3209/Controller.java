@@ -32,6 +32,8 @@ public class Controller {
         view.setController(controller);
         view.init();
         controller.init();
+        //HTMLFileFilter htmlFileFilter = new HTMLFileFilter();
+        //System.out.println(htmlFileFilter.accept(new File("E:\\Games\\test\\Online regex tester and debugger_ PHP, PCRE, Python, Golang and JavaScript.htM")));
     }
 
     public void init(){
