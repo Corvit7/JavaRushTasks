@@ -5,7 +5,6 @@ import com.javarush.task.task32.task3209.listeners.TabbedPaneChangeListener;
 import com.javarush.task.task32.task3209.listeners.UndoListener;
 
 import javax.swing.*;
-import javax.swing.text.Document;
 import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -91,7 +90,27 @@ public class View extends JFrame implements ActionListener {
         pack();
     }
 
-    public void selectedTabChanged(){}
+    //    HTML Editor (18)
+//    Реализуй метод selectedTabChanged() представления. Этот метод вызывается, когда произошла смена выбранной вкладки. Итак:
+//            18.1. Метод должен проверить, какая вкладка сейчас оказалась выбранной.
+//18.2. Если выбрана вкладка с индексом 0 (html вкладка), значит нам нужно получить текст из plainTextPane и установить его в контроллер с помощью метода setPlainText.
+//            18.3. Если выбрана вкладка с индексом 1 (вкладка с html текстом), то необходимо получить текст у контроллера с помощью метода getPlainText() и установить его в панель plainTextPane.
+//            18.4. Сбросить правки (вызвать метод resetUndo представления).
+//
+//
+//    Требования:
+//            1. Метод selectedTabChanged() должен проверить, какая вкладка сейчас оказалась выбранной.
+//            2. Если индекс вкладки равен 0 - метод selectedTabChanged() должен получить текст из plainTextPane и установить его в контроллер с помощью метода setPlainText().
+//            3. Если индекс вкладки равен 1 - метод selectedTabChanged() должен получить текст у контроллера с помощью метода getPlainText() и установить его в панель plainTextPane.
+//            4. Метод selectedTabChanged() должен сбросить правки.
+    public void selectedTabChanged(){
+
+        if(tabbedPane.getSelectedIndex() == 0)
+            controller.setPlainText(plainTextPane.getText());
+        else
+            plainTextPane.setText(controller.getPlainText());
+        this.resetUndo();
+    }
 
     public boolean canUndo () {
         if (undoManager.canUndo())
