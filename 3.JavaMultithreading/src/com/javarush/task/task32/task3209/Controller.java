@@ -2,15 +2,13 @@ package com.javarush.task.task32.task3209;
 
 import com.javarush.task.task32.task3209.listeners.UndoListener;
 
+import javax.swing.*;
 import javax.swing.text.*;
 import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.undo.UndoManager;
-import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.io.*;
 
 public class Controller {
     private View view;
@@ -110,6 +108,55 @@ public class Controller {
     }
     public void openDocument() {}
     public void saveDocument() {}
-    public void saveDocumentAs() {}
+
+//    HTML Editor (22)
+//    Реализуем в контроллере метод для сохранения файла под новым именем saveDocumentAs().
+//    Реализация должна:
+//            22.1. Переключать представление на html вкладку.
+//22.2. Создавать новый объект для выбора файла JFileChooser.
+//22.3. Устанавливать ему в качестве фильтра объект HTMLFileFilter.
+//22.4. Показывать диалоговое окно "Save File" для выбора файла.
+//22.5. Если пользователь подтвердит выбор файла:
+//            22.5.1. Сохранять выбранный файл в поле currentFile.
+//            22.5.2. Устанавливать имя файла в качестве заголовка окна представления.
+//            22.5.3. Создавать FileWriter на базе currentFile.
+//22.5.4. Переписывать данные из документа document в объекта FileWriter-а аналогично тому, как мы это делали в методе getPlainText().
+//            22.6. Метод не должен кидать исключения.
+//    Проверь работу пункта меню Сохранить как...
+//
+//
+//    Требования:
+//            1. Метод saveDocumentAs() в контроллере должен переключать представление на html вкладку.
+//            2. Метод saveDocumentAs() в контроллере должен создавать новый объект для выбора файла JFileChooser.
+//            3. Метод saveDocumentAs() в контроллере должен устанавливать объекту класса JFileChooser в качестве фильтра объект HTMLFileFilter.
+//            4. Метод saveDocumentAs() в контроллере должен, используя метод showSaveDialog() у JFileChooser показывать диалоговое окно "Save File" для выбора файла.
+//5. Метод saveDocumentAs() в контроллере должен сохранять выбранный файл в поле currentFile, если пользователь подтвердит выбор файла.
+//            6. Метод saveDocumentAs() в контроллере должен устанавливать имя файла в качестве заголовка окна представления, если пользователь подтвердит выбор файла.
+//            7. Метод saveDocumentAs() в контроллере должен создавать FileWriter на базе currentFile, если пользователь подтвердит выбор файла.
+//            8. Метод saveDocumentAs() в контроллере должен используя HTMLEditorKit переписывать данные из документа document в объект FileWriter-а, если пользователь подтвердит выбор файла.
+//9. Метод saveDocumentAs() в контроллере не должен кидать исключения, а логировать через ExceptionHandler.
+
+public void saveDocumentAs() {
+    view.selectHtmlTab();
+    JFileChooser jFileChooser = new JFileChooser();
+    jFileChooser.setFileFilter(new HTMLFileFilter());
+    jFileChooser.setDialogTitle("Save File");
+    int index = jFileChooser.showSaveDialog(view);
+    if (index == JFileChooser.APPROVE_OPTION) {
+        currentFile = jFileChooser.getSelectedFile();
+        view.setTitle(currentFile.getName());
+        try {
+            FileWriter fileWriter = new FileWriter(currentFile);
+            new HTMLEditorKit().write(fileWriter, document, 0, document.getLength());
+            fileWriter.close();
+//            JOptionPane.showMessageDialog(view,
+//                    "Файл '" + jFileChooser.getSelectedFile() +
+//                            " сохранен");
+
+        } catch (IOException | BadLocationException e) {
+            ExceptionHandler.log(e);
+        }
+    }
+}
 
 }
