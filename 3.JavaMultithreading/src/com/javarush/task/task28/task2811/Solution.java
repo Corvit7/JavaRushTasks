@@ -23,5 +23,64 @@ ReentrantReadWriteLock
 public class Solution {
     public static void main(String[] args) {
         ReadWriteMap<Integer, String> linkedSafeMap = new ReadWriteMap<>(new LinkedHashMap<>());
+
+//        testing
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                for (int i = 0; i < 10; i++)
+//                {
+//                    linkedSafeMap.put(i, "test" + i);
+//                    try{
+//                        Thread.sleep(5000);
+//                    } catch (InterruptedException e)
+//                    {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        }.start();
+//
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                try
+//                {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e)
+//                {
+//                    e.printStackTrace();
+//                }
+//                for (int i = 10; i < 20; i++)
+//                {
+//                    linkedSafeMap.put(i, "test" + i);
+//                    try{
+//                        Thread.sleep(5000);
+//                    } catch (InterruptedException e)
+//                    {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        }.start();
+//
+//        new Thread()
+//        {
+//            @Override
+//            public void run() {
+//                for (int j = 0; j < 20; j++) {
+//                    for (int i = 0; i < 20; i++) {
+//                        System.out.println(linkedSafeMap.get(i));
+//                    }
+//                    try {
+//                        Thread.sleep(5000);
+//                    } catch (InterruptedException e)
+//                    {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        }.start();
+
     }
 }
