@@ -17,17 +17,20 @@ public class Order {
 
     @Override
     public String toString() {
-        return dishes.isEmpty() ? "" : "Your order: " + dishes + " of " + tablet.toString();
-//        String res = null;
-//        if (dishes.size()>0)
-//        {
-//            res = "Your order: [";
-//            for (Dish dish: dishes) {
-//                res += dish.name() + ", ";
-//            }
-//            res = res.substring(0, res.length() -2);
-//            res += "] " + tablet;
-//        }
-//        return res;
+        return dishes.isEmpty() ? "" : "Your order: " + dishes + " of " + tablet +  ", cooking time " + getTotalCookingTime() + "min";
+    }
+
+    public int getTotalCookingTime()
+    {
+        int time = 0;
+        for (Dish dish: dishes) {
+            time += dish.getDuration();
+        }
+        return time;
+    }
+
+    public boolean isEmpty()
+    {
+        return dishes.isEmpty();
     }
 }
