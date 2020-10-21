@@ -17,17 +17,17 @@ public class Order {
 
     @Override
     public String toString() {
-        String res = null;
-        if (dishes.size()>0)
-        {
-//            Your order: [Juice, Fish] of Tablet{number=5}
-            res = "Your order: [";
-            for (Dish dish: dishes) {
-                res += dish.name() + ", ";
-            }
-            res = res.substring(0, res.length() -2);
-            res += "] of Tablet{number=" + tablet.getNumber() + "}";
-        }
-        return res;
+        return dishes.isEmpty() ? "" : "Your order " + dishes + " of " + tablet.toString();
+//        String res = null;
+//        if (dishes.size()>0)
+//        {
+//            res = "Your order: [";
+//            for (Dish dish: dishes) {
+//                res += dish.name() + ", ";
+//            }
+//            res = res.substring(0, res.length() -2);
+//            res += "] " + tablet;
+//        }
+//        return res;
     }
 }
