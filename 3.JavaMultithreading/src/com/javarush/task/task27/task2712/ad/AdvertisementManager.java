@@ -10,7 +10,11 @@ public class AdvertisementManager {
         this.timeSeconds = timeSeconds;
     }
 
-    public void processVideos() {
-        ConsoleHelper.writeMessage("calling processVideos method");
+    public void processVideos() throws NoVideoAvailableException,UnsupportedOperationException{
+//        ConsoleHelper.writeMessage(storage.list().get(0).toString());
+//        throw new NoVideoAvailableException();
+        if(storage.list().size() == 0)
+            throw new NoVideoAvailableException();
+        storage.list().get(0).revalidate();
     }
 }
