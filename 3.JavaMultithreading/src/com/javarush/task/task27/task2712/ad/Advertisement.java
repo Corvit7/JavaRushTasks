@@ -33,6 +33,10 @@ public class Advertisement {
         return amountPerOneDisplaying;
     }
 
+    public long getInitialAmount() {
+        return initialAmount;
+    }
+
     public void revalidate() throws UnsupportedOperationException {
         if(hits==0)
             throw new UnsupportedOperationException();
