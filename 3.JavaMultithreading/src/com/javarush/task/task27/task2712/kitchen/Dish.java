@@ -1,6 +1,7 @@
 package com.javarush.task.task27.task2712.kitchen;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public enum Dish {
 
@@ -12,22 +13,17 @@ public enum Dish {
 
     private int duration;
 
-    public int getDuration() {
-        return duration;
-    }
-
     Dish(int duration) {
         this.duration = duration;
     }
 
-    public static String allDishesToString(){
-        String res = "\"";
-        for (Dish dish: Dish.values()
-             ) {
-            res += dish.name() + ", ";
-        }
-        res = res.substring(0, res.length()-2);
-        res += "\"";
-        return res;
+    public int getDuration() {
+        return duration;
+    }
+
+    public static String allDishesToString() {
+        return Arrays.stream(Dish.values()).
+                map(o -> String.valueOf(o)).
+                collect(Collectors.joining(", "));
     }
 }
