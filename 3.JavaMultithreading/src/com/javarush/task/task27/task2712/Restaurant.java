@@ -23,7 +23,11 @@ public class Restaurant {
 //
 //        tablet.createOrder();
 
-        StatisticManager statisticManager = StatisticManager.getInstance();
+        DirectorTablet directorTablet = new DirectorTablet();
+        directorTablet.printActiveVideoSet();
+        directorTablet.printAdvertisementProfit();
+        directorTablet.printArchivedVideoSet();
+        directorTablet.printCookWorkloading();
 
 //        StatisticManager statisticManager = StatisticManager.getInstance();
 
