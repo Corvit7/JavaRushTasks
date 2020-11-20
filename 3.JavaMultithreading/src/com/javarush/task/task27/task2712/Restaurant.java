@@ -12,16 +12,18 @@ public class Restaurant {
 
     public static void main(String[] args) {
 
-        Cook cook = new Cook("Amigo");
+//        Cook cook = new Cook("Amigo");
+//
+//        Waiter waiter = new Waiter();
+//        cook.addObserver(waiter);
+//
+//        Tablet tablet = new Tablet(5);
+//        tablet.addObserver(cook);
+//
+//
+//        tablet.createOrder();
 
-        Waiter waiter = new Waiter();
-        cook.addObserver(waiter);
-
-        Tablet tablet = new Tablet(5);
-        tablet.addObserver(cook);
-
-
-        tablet.createOrder();
+        StatisticManager statisticManager = StatisticManager.getInstance();
 
 //        StatisticManager statisticManager = StatisticManager.getInstance();
 
