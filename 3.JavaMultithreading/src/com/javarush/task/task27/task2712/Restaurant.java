@@ -12,21 +12,23 @@ public class Restaurant {
 
     public static void main(String[] args) {
 
-//        Cook cook = new Cook("Amigo");
-//
-//        Waiter waiter = new Waiter();
-//        cook.addObserver(waiter);
-//
-//        Tablet tablet = new Tablet(5);
-//        tablet.addObserver(cook);
-//
-//
-//        tablet.createOrder();
+        Cook cook = new Cook("Amigo");
+        Cook cook2 = new Cook("Vitia");
+
+        Waiter waiter = new Waiter();
+        cook.addObserver(waiter);
+
+        Tablet tablet = new Tablet(5);
+        tablet.addObserver(cook);
+
+        Tablet tablet2 = new Tablet(4);
+        tablet2.addObserver(cook2);
+
+        tablet.createOrder();
+        tablet.createOrder();
+        tablet2.createOrder();
 
         DirectorTablet directorTablet = new DirectorTablet();
-        directorTablet.printActiveVideoSet();
-        directorTablet.printAdvertisementProfit();
-        directorTablet.printArchivedVideoSet();
         directorTablet.printCookWorkloading();
 
 //        StatisticManager statisticManager = StatisticManager.getInstance();

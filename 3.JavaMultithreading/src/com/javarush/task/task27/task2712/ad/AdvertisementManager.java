@@ -59,7 +59,7 @@ public class AdvertisementManager {
 
             StatisticManager.getInstance().register(new VideoSelectedEventDataRow(
                     optimalList,
-                    optimalList.size(),
+                    optimalList.stream().mapToLong(Advertisement::getAmountPerOneDisplaying).sum(),
                     optimalList.stream().mapToInt(Advertisement::getDuration).sum()));
 
             optimalList.stream()
