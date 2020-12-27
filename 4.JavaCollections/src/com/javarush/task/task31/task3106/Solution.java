@@ -26,7 +26,6 @@ public class Solution {
         try (ZipInputStream zip = new ZipInputStream(new SequenceInputStream(files.elements()));) {
             byte[] buffer = new byte[2048];
             int len;
-//            int cur_pos;
             ZipEntry entry;
             Files.createDirectories(Paths.get(args[0]));
             while ((entry = zip.getNextEntry()) != null) {
