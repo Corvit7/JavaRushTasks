@@ -26,11 +26,12 @@ public class Solution {
         try (ZipInputStream zip = new ZipInputStream(new SequenceInputStream(files.elements()));) {
             byte[] buffer = new byte[2048];
             int len;
+//            int cur_pos;
             ZipEntry entry;
             Files.createDirectories(Paths.get(args[0]));
             while ((entry = zip.getNextEntry()) != null) {
+                try(FileOutputStream fos = new FileOutputStream(args[0]+"\\" + entry.getName())) {
                 while ((len = zip.read(buffer)) != -1) {
-                    try(FileOutputStream fos = new FileOutputStream(args[0]+"\\" + entry.getName())) {
                         fos.write(buffer, 0, len);
                         fos.flush();
                     }
