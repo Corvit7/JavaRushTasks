@@ -5,8 +5,11 @@ package com.javarush.task.task31.task3106;
 */
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Vector;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class Solution {
@@ -20,17 +23,20 @@ public class Solution {
             }
         } catch (FileNotFoundException exc) {}
 
-        try (ZipInputStream zip = new ZipInputStream(new SequenceInputStream(files.elements()));
-             FileOutputStream fos = new FileOutputStream(args[0])) {
+        try (ZipInputStream zip = new ZipInputStream(new SequenceInputStream(files.elements()));) {
             byte[] buffer = new byte[2048];
             int len;
-            while (zip.getNextEntry() != null) {
+            ZipEntry entry;
+            Files.createDirectories(Paths.get(args[0]));
+            while ((entry = zip.getNextEntry()) != null) {
                 while ((len = zip.read(buffer)) != -1) {
-                    fos.write(buffer, 0, len) ;
-                    fos.flush();
+                    try(FileOutputStream fos = new FileOutputStream(args[0]+"\\" + entry.getName())) {
+                        fos.write(buffer, 0, len);
+                        fos.flush();
+                    }
                 }
                 zip.closeEntry();
             }
-        } catch (IOException exc) {}
+        } catch (IOException exc) {exc.printStackTrace();}
     }
 }
