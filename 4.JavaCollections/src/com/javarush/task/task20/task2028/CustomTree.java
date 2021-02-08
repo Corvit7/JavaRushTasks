@@ -53,15 +53,24 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
     public int size() {
         return 0;
     }
+    
 
 
-//    public String get(int index)
-//    public String set(int index, String element)
-//    public void add(int index, String element)
-//    public String remove(int index)
-//    public List<String> subList(int fromIndex, int toIndex)
-//    protected void removeRange(int fromIndex, int toIndex)
-//    public boolean addAll(int index, Collection<? extends String> c)
+    static class Entry<T> implements Serializable
+    {
+        String elementName;
+        boolean availableToAddLeftChildren, availableToAddRightChildren;
+        Entry<T> parent, leftChild, rightChild;
 
+        public Entry(String string) {
+            elementName = string;
+            availableToAddLeftChildren = true;
+            availableToAddRightChildren = true;
+        }
+
+        public boolean isAvailableToAddChildren() {
+            return availableToAddRightChildren || availableToAddLeftChildren;
+        }
+    }
 
 }
