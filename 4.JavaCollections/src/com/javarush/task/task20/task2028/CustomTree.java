@@ -3,13 +3,8 @@ package com.javarush.task.task20.task2028;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.AbstractList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
-/* 
-Построй дерево(1)
-*/
 
 public class CustomTree extends AbstractList<String> implements Cloneable, Serializable {
     
@@ -28,6 +23,43 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
     public void add(int index, String element) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public boolean add(String s) {
+        boolean elementAdded = false;
+        Queue<Entry<String>> queue = new LinkedList<>();
+        queue.add(root);
+        Entry<String> newE = new Entry<>(s);
+        Entry<String> curE = null;
+        do{
+            if(!queue.isEmpty()) curE = queue.poll();
+            if(curE.isAvailableToAddChildren())
+            {
+                if (curE.availableToAddLeftChildren)
+                {
+                    newE.parent = curE;
+                    elementAdded = true;
+                    curE.availableToAddLeftChildren = false;
+                    curE.leftChild = newE;
+                } else if (curE.availableToAddRightChildren)
+                {
+                    newE.parent = curE;
+                    elementAdded = true;
+                    curE.availableToAddRightChildren = false;
+                    curE.rightChild = newE;
+                }
+            } else
+            {
+                queue.add(curE.leftChild);
+                queue.add(curE.rightChild);
+            }
+
+        } while (!queue.isEmpty() && !elementAdded);
+        counter++;
+        return true;
+    }
+
+
 
     @Override
     public String remove(int index) {
@@ -51,9 +83,33 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
 
     @Override
     public int size() {
-        return 0;
+        return counter;
     }
-    
+
+
+    public String getParent(String s)
+    {
+        boolean elementFound = false;
+        Queue<Entry<String>> queue = new LinkedList<>();
+        queue.add(root);
+        Entry<String> curE = null;
+        do {
+            if(!queue.isEmpty()) curE = queue.poll();
+            if (curE.elementName.equals(s))
+            {
+                elementFound = true;
+            } else
+            {
+                if (curE.rightChild != null)
+                    queue.add(curE.rightChild);
+                if(curE.leftChild != null)
+                    queue.add(curE.leftChild);
+            }
+        } while (!queue.isEmpty() && !elementFound);
+        if(!elementFound)
+            return "null";
+        return curE.parent.elementName;
+    }
 
 
     static class Entry<T> implements Serializable
@@ -73,4 +129,13 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
         }
     }
 
+    Entry<String> root;
+    //ArrayDeque<Entry<String>> deque = new ArrayDeque<>();
+    int counter;
+
+    public CustomTree() {
+        this.root = new Entry<>("test");
+        counter = 0;
+        //deque.add(root);
+    }
 }
