@@ -1,6 +1,5 @@
 package com.javarush.task.task22.task2213;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -102,90 +101,32 @@ public class Field {
         System.out.println();
     }
 
-
-//    private int[][] testMatrix={
-//            {1,0,1},
-//            {0,0,0},
-//            {1,1,1},
-//            {1,1,1},
-//    };
-//    а) удалить стоку:
-//    matrix[i] = null
-//    б) скопировать [ссылку на] строку:
-//    matrix[i+1] = matrix[i];
-//    в) создать новую строку:
-//    matrix[i] = new int[width];
-//
-//    public void print_test() {
-//        for (int i = 0; i < height; i++) {
-//            for (int j = 0; j < width; j++) {
-//                if (testMatrix[i][j] == 0)
-//                    System.out.print(".");
-//                else
-//                    System.out.print("X");
-//            }
-//            System.out.print("\n");
-//        }
-//    }
-
-//    public void removeFullLine(int line)
-//    {
-//        testMatrix[line] = null;
-//        for (int i = line; i> 0; i--)
-//        {
-//            testMatrix[i] = testMatrix[i-1];
-//        }
-//        testMatrix[0] = new int[width];
-//
-//    }
-
-//    public static void main(String[] args) {
-//        Field field = new Field(3,4);
-//        //field.removeFullLine(2);
-//        //field.removeFullLine(3);
-//        field.removeFullLines();
-//        field.print_test();
-//    }
     /**
      * Удаляем заполненные линии
      */
-//    public void removeFullLines() {
-//        //Например так:
-//        //Создаем список для хранения линий
-//        //Копируем все неполные линии в список.
-//        //Добавляем недостающие строки в начало списка.
-//        //Преобразуем список обратно в матрицу
-//        for (int i = 0; i < height; i++)
-//        {
-//            boolean flag = true;
-//            for (int j = 0; j< width; j++)
-//                if (testMatrix[i][j]==0)
-//                    flag = false;
-//            if(flag)
-//                removeFullLine(i);
-//            flag = false;
-//        }
-//    }
-
-    private void removeFullLine(int line)
-    {
-        matrix[line] = null;
-        for (int i = line; i> 0; i--)
-        {
-            matrix[i] = matrix[i-1];
-        }
-        matrix[0] = new int[width];
-
-    }
     public void removeFullLines() {
-        for (int i = 0; i < height; i++)
-        {
-            boolean flag = true;
-            for (int j = 0; j< width; j++)
-                if (matrix[i][j]==0)
-                    flag = false;
-            if(flag)
-                removeFullLine(i);
+        //Создаем список для хранения линий
+        ArrayList<int[]> lines = new ArrayList<int[]>();
+
+        //Копируем все неполные линии в список.
+        for (int i = 0; i < height; i++) {
+            //подсчитываем количество единиц в строке - просто суммируем все ее значения
+            int count = 0;
+            for (int j = 0; j < width; j++) {
+                count += matrix[i][j];
+            }
+
+            //Если сумма строки не равна ее ширине - добавляем в список
+            if (count != width)
+                lines.add(matrix[i]);
         }
+
+        //Добавляем недостающие строки в начало списка.
+        while (lines.size() < height) {
+            lines.add(0, new int[width]);
+        }
+
+        //Преобразуем список обратно в матрицу
+        matrix = lines.toArray(new int[height][width]);
     }
 }
