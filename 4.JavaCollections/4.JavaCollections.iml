@@ -10,5 +10,6 @@
     <orderEntry type="library" name="jackson-core-2.6.1" level="project" />
     <orderEntry type="library" name="jackson-annotations-2.6.1" level="project" />
     <orderEntry type="library" name="jackson-databind-2.6.1" level="project" />
+    <orderEntry type="library" name="commons-io" level="project" />
   </component>
 </module>
