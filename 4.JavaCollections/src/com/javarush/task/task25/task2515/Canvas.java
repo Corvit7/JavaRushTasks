@@ -76,12 +76,35 @@ public class Canvas {
 
     }
 
+    public void clear() {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                setPoint(j, i, ' ');
+            }
+        }
+    }
+
+    public void print() {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                System.out.print(matrix[j][i]);
+            }
+            System.out.println();
+        }
+        System.out.println();
+        System.out.println();
+    }
+
     public static void main(String[] args) {
         Canvas canvas = new Canvas(3,3);
         int[][] matrix = new int[3][3];
-        matrix[2][1] = 127;
+        matrix[0][0] = 127;
+        matrix[1][0] = 127;
+        matrix[2][0] = 127;
         canvas.drawMatrix(0,0, matrix, 'b');
-        System.out.println(canvas.matrix);
+        canvas.print();
+        canvas.clear();
+        canvas.print();
     }
 
 }
