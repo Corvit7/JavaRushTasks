@@ -85,9 +85,5 @@ public class Space {
     public static void main(String[] args) {
 
 
-        SpaceShip first = new SpaceShip(1,1,1);
-        SpaceShip second = new SpaceShip(5,5,1);
-        System.out.println(first.isIntersect(second));
-
     }
 }
