@@ -80,7 +80,10 @@ public class Space {
     public void draw(){}
     public void sleep(int ms){}
 
+    public static Space game;
+
     public static void main(String[] args) {
+
 
         SpaceShip first = new SpaceShip(1,1,1);
         SpaceShip second = new SpaceShip(5,5,1);
