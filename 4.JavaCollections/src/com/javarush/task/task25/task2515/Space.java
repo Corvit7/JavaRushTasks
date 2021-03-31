@@ -83,7 +83,28 @@ public class Space {
     public static Space game;
 
     public static void main(String[] args) {
-        
+
+        Space.game = new Space(10, 10);
+
+        Canvas canvas = new Canvas(10, 10);
+
+//        SpaceShip spaceShip = new SpaceShip(3,3);
+//        spaceShip.draw(canvas);
+//        canvas.print();
+//        spaceShip.moveRight();
+//        spaceShip.move();
+//        spaceShip.draw(canvas);
+//        canvas.print();
+//        spaceShip.move();
+//        spaceShip.draw(canvas);
+//        canvas.print();
+
+        Ufo ufo = new Ufo(3,3);
+        ufo.draw(canvas);
+        canvas.print();
+        ufo.move();
+        ufo.draw(canvas);
+        canvas.print();
 
     }
 }
