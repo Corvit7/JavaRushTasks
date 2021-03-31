@@ -1,12 +1,15 @@
 package com.javarush.task.task25.task2515;
 
-public class Ufo extends BaseObject{
-
+/**
+ * Класс для НЛО
+ */
+public class Ufo extends BaseObject {
+    //картинка для отрисовки
     private static int[][] matrix = {
+            {0, 0, 0, 0, 0},
             {0, 0, 1, 0, 0},
-            {0, 1, 0, 1, 0},
-            {1, 0, 1, 0, 1},
-            {0, 1, 0, 1, 0},
+            {1, 1, 1, 1, 1},
+            {0, 1, 1, 1, 0},
             {0, 0, 0, 0, 0},
     };
 
@@ -14,36 +17,37 @@ public class Ufo extends BaseObject{
         super(x, y, 3);
     }
 
-    public void fire() {
-        Space.game.getBombs().add(new Bomb(x, y+3));
-    }
-
+    /**
+     * Метод рисует свой объект на "канвасе".
+     */
     @Override
     public void draw(Canvas canvas) {
         canvas.drawMatrix(x - radius + 1, y - radius + 1, matrix, 'U');
     }
 
+    /**
+     * Двигаем себя на один ход в случайном направлении.
+     */
     @Override
     public void move() {
+        double dx = Math.random() * 2 - 1;
+        double dy = Math.random() * 2 - 1;
 
-//        double dx=Math.round(Math.random() * 2 - 1);
-//        double dy=Math.round(Math.random() * 2 - 1);
+        x += dx;
+        y += dy;
 
-//        x = x + dx;
-//        y = y + dy;
-//
-//        if (y <= Space.game.getHeight() / 2)
-//            y--;
-//
-//        checkBorders(radius, Space.game.getWidth() - radius + 1, 1, Space.game.getHeight() + 1);
+        checkBorders(radius, Space.game.getWidth() - radius + 1, radius - 1, Space.game.getHeight() / 2 - 1);
 
-        double dx = Math.random() * 2 - 1; //-1..1
-        double dy = Math.random() * 2 - 1; //-1..1
-        x = x + dx;
-        y = y + dy;
-        checkBorders(radius, Space.game.getWidth() - radius, radius, Space.game.getHeight()/2);
-
-        if(Math.random() >= 0.9)
+        int random10 = (int) (Math.random() * 10);
+        if (random10 == 0)
             fire();
+    }
+
+    /**
+     * Стреляем.
+     * Сбрасываем(создаем) одну бомбу прямо под собой.
+     */
+    public void fire() {
+        Space.game.getBombs().add(new Bomb(x, y + 3));
     }
 }

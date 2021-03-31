@@ -1,55 +1,166 @@
 package com.javarush.task.task25.task2515;
 
-
-//Space (3)
-//        Для чего нам нужен класс Space?
-//        Чтобы хранить в себе все объекты и управлять их взаимодействием.
-//        А какие параметры должны у него быть?
-//        width (ширина), height (высота). Тип int.
-//        А еще?
-//        а) SpaceShip ship (космический корабль),
-//        б) список для хранения всех НЛО - ufos (List<Ufo>),
-//        в) список для хранения всех ракет - rockets (List<Rocket>),
-//        г) список для хранения всех бомб - bombs (List<Bomb>).
-//
-//        Задание:
-//        Добавь все эти поля в класс Space. Поля должны быть приватными.
-//        Инициализируй коллекции.
-//        И не забудь добавить полям getter'ы, а для ship еще и setter!
-//
-//        Ну и конструктор. А что должен содержать конструктор?
-//        Достаточно будет width и height.
-//
-//
-//        Требования:
-//        1. В классе Space создай поле width. Добавь для него getter.
-//        2. В классе Space создай поле height. Добавь для него getter.
-//        3. В классе Space создай поле ship. Добавь для него getter и setter.
-//        4. В классе Space создай поле ufos. Добавь для него getter.
-//        5. В классе Space создай поле rockets. Добавь для него getter.
-//        6. В классе Space создай поле bombs. Добавь для него getter.
-//        7. В классе Space создай конструктор, который будет инициализировать width и height.
-//        8. Инициализируй поля с коллекциями.
-
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Главный класс игры - Космос (Space)
+ */
 public class Space {
-
+    //Ширина и высота игрового поля
     private int width;
     private int height;
+
+    //Космический корабль
     private SpaceShip ship;
-    private List<Ufo> ufos = new LinkedList<>();
-    private List<Rocket> rockets = new LinkedList<>();
-    private List<Bomb> bombs = new LinkedList<>();
+    //Список НЛО
+    private List<Ufo> ufos = new ArrayList<Ufo>();
+    //Список бомб
+    private List<Bomb> bombs = new ArrayList<Bomb>();
+    //Список ракет
+    private List<Rocket> rockets = new ArrayList<Rocket>();
 
     public Space(int width, int height) {
         this.width = width;
         this.height = height;
     }
 
+    /**
+     * Основной цикл программы.
+     * Тут происходят все важные действия
+     */
+    public void run() {
+        //Создаем холст для отрисовки.
+        Canvas canvas = new Canvas(width, height);
+
+        //Создаем объект "наблюдатель за клавиатурой" и стартуем его.
+        KeyboardObserver keyboardObserver = new KeyboardObserver();
+        keyboardObserver.start();
+
+        //Игра работает, пока корабль жив
+        while (ship.isAlive()) {
+            //"наблюдатель" содержит события о нажатии клавиш?
+            if (keyboardObserver.hasKeyEvents()) {
+                KeyEvent event = keyboardObserver.getEventFromTop();
+                //Если "стрелка влево" - сдвинуть фигурку влево
+                System.out.print(event.getKeyCode());
+                if (event.getKeyCode() == KeyEvent.VK_LEFT)
+                    ship.moveLeft();
+                    //Если "стрелка вправо" - сдвинуть фигурку вправо
+                else if (event.getKeyCode() == KeyEvent.VK_RIGHT)
+                    ship.moveRight();
+                    //Если "пробел" - стреляем
+                else if (event.getKeyCode() == KeyEvent.VK_SPACE)
+                    ship.fire();
+            }
+
+            //двигаем все объекты игры
+            moveAllItems();
+
+            //проверяем столкновения
+            checkBombs();
+            checkRockets();
+            //удаляем умершие объекты из списков
+            removeDead();
+
+            //Создаем НЛО (1 раз в 10 ходов)
+            createUfo();
+
+            //Отрисовываем все объекты на холст, а холст выводим на экран
+            canvas.clear();
+            draw(canvas);
+            canvas.print();
+
+            //Пауза 300 миллисекунд
+            Space.sleep(300);
+        }
+
+        //Выводим сообщение "Game Over"
+        System.out.println("Game Over!");
+    }
+
+    /**
+     * Двигаем все объекты игры
+     */
+    public void moveAllItems() {
+        //нужно получить список всех игрвых объектов и у каждого вызвать метод move().
+        for (BaseObject obj: getAllItems()
+             ) {
+            obj.move();
+        }
+    }
+
+    /**
+     * Метод возвращает общий список, который содержит все объекты игры
+     */
+    public List<BaseObject> getAllItems() {
+        //нужно создать новый список и положить в него все игровые объекты.
+        List<BaseObject> list = new LinkedList<>();
+        list.addAll(Space.game.getBombs());
+        list.addAll(Space.game.getRockets());
+        list.addAll(Space.game.getUfos());
+        list.add(ship);
+        return list;
+    }
+
+    /**
+     * Создаем новый НЛО. 1 раз на 10 вызовов.
+     */
+    public void createUfo() {
+        //тут нужно создать новый НЛО.
+//        if (Math.random() > 0.9)
+//            Space.game.getUfos().add(new Ufo(3,3));
+
+    }
+
+    /**
+     * Проверяем бомбы.
+     * а) столкновение с кораблем (бомба и корабль умирают)
+     * б) падение ниже края игрового поля (бомба умирает)
+     */
+    public void checkBombs() {
+        //тут нужно проверить все возможные столкновения для каждой бомбы.
+    }
+
+    /**
+     * Проверяем рокеты.
+     * а) столкновение с НЛО (ракета и НЛО умирают)
+     * б) вылет выше края игрового поля (ракета умирает)
+     */
+    public void checkRockets() {
+        //тут нужно проверить все возможные столкновения для каждой ракеты.
+    }
+
+    /**
+     * Удаляем умершие объекты (бомбы, ракеты, НЛО) из списков
+     */
+    public void removeDead() {
+        //тут нужно удалить все умершие объекты из списков (кроме космического корабля)
+    }
+
+    /**
+     * Отрисовка всех объектов игры:
+     * а) заполняем весь холст точками.
+     * б) отрисовываем все объекты на холст.
+     */
+    public void draw(Canvas canvas) {
+        //тут нужно отрисовать все объекты игры
+    }
+
+
+    public SpaceShip getShip() {
+        return ship;
+    }
+
     public void setShip(SpaceShip ship) {
         this.ship = ship;
+    }
+
+    public List<Ufo> getUfos() {
+        return ufos;
     }
 
     public int getWidth() {
@@ -60,51 +171,29 @@ public class Space {
         return height;
     }
 
-    public SpaceShip getShip() {
-        return ship;
-    }
-
-    public List<Ufo> getUfos() {
-        return ufos;
+    public List<Bomb> getBombs() {
+        return bombs;
     }
 
     public List<Rocket> getRockets() {
         return rockets;
     }
 
-    public List<Bomb> getBombs() {
-        return bombs;
-    }
-
-    public void run(){}
-    public void draw(){}
-    public void sleep(int ms){}
-
     public static Space game;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        game = new Space(20, 20);
+        game.setShip(new SpaceShip(10, 18));
+        game.run();
+    }
 
-        Space.game = new Space(10, 10);
-
-        Canvas canvas = new Canvas(10, 10);
-
-//        SpaceShip spaceShip = new SpaceShip(3,3);
-//        spaceShip.draw(canvas);
-//        canvas.print();
-//        spaceShip.moveRight();
-//        spaceShip.move();
-//        spaceShip.draw(canvas);
-//        canvas.print();
-//        spaceShip.move();
-//        spaceShip.draw(canvas);
-//        canvas.print();
-
-        Ufo ufo = new Ufo(3,3);
-        ufo.draw(canvas);
-        canvas.print();
-        ufo.move();
-        ufo.draw(canvas);
-        canvas.print();
-
+    /**
+     * Метод делает паузу длинной delay миллисекунд.
+     */
+    public static void sleep(int delay) {
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException ignored) {
+        }
     }
 }
