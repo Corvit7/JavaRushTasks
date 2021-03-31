@@ -112,8 +112,16 @@ public class Space {
     public void createUfo() {
         //тут нужно создать новый НЛО.
 //        if (Math.random() > 0.9)
-//            Space.game.getUfos().add(new Ufo(3,3));
+//            Space.game.getUfos().add(new Ufo(Space.game.getWidth()/2,Space.game.getHeight()-3));
+        if (!ufos.isEmpty()) return;
 
+        int random10 = (int) (Math.random() * 10);
+        if (random10 == 0) {
+            double x = Math.random() * width;
+            double y = Math.random() * height / 2;
+
+            ufos.add(new Ufo(x, y));
+        }
     }
 
     /**
@@ -123,6 +131,16 @@ public class Space {
      */
     public void checkBombs() {
         //тут нужно проверить все возможные столкновения для каждой бомбы.
+        for (Bomb bomb: Space.game.getBombs()
+             ) {
+            if (bomb.isIntersect(Space.game.ship))
+            {
+                bomb.die();
+                Space.game.ship.die();
+            }
+            if(bomb.y > Space.game.getHeight())
+                bomb.die();
+        }
     }
 
     /**
@@ -132,6 +150,19 @@ public class Space {
      */
     public void checkRockets() {
         //тут нужно проверить все возможные столкновения для каждой ракеты.
+        for (Rocket rocket: Space.game.getRockets()
+        ) {
+            for (Ufo ufo: Space.game.getUfos()
+                 ) {
+                if (rocket.isIntersect(ufo))
+                {
+                    rocket.die();
+                    ufo.die();
+                }
+            }
+            if(rocket.y < 0)
+                rocket.die();
+        }
     }
 
     /**
@@ -139,6 +170,9 @@ public class Space {
      */
     public void removeDead() {
         //тут нужно удалить все умершие объекты из списков (кроме космического корабля)
+        Space.game.getBombs().removeIf(bomb -> !bomb.isAlive());
+        Space.game.getRockets().removeIf(rocket -> !rocket.isAlive());
+        Space.game.getUfos().removeIf(ufo -> !ufo.isAlive());
     }
 
     /**
@@ -180,6 +214,7 @@ public class Space {
     }
 
     public static Space game;
+    private static int moveCounter;
 
     public static void main(String[] args) throws Exception {
         game = new Space(20, 20);
