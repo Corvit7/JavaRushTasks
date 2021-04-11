@@ -59,6 +59,18 @@ public class AmigoSet<E> extends AbstractSet<E> implements Cloneable, Serializab
         return null==map.remove(o);
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        AmigoSet clon = (AmigoSet)super.clone();
+        try {
+            clon.map = (HashMap)map.clone();
+        } catch (Exception e)
+        {
+            throw new InternalError();
+        }
+        return clon;
+    }
+
     public static void main(String[] args) {
         Collection<Integer> src = new HashSet<>();
         src.add(1);
@@ -69,6 +81,16 @@ public class AmigoSet<E> extends AbstractSet<E> implements Cloneable, Serializab
         for (Integer i: dst
              ) {
             System.out.println(i);
+        }
+        try {
+            Object clon = dst.clone();
+            for (Integer i: (AmigoSet<Integer>)clon
+            ) {
+                System.out.println(i);
+            }
+        } catch (CloneNotSupportedException e)
+        {
+            e.printStackTrace();
         }
     }
 
