@@ -1,6 +1,6 @@
 package com.javarush.task.task37.task3707;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.*;
 
 public class AmigoSet<E> extends AbstractSet<E> implements Cloneable, Serializable, Set<E> {
@@ -16,10 +16,6 @@ public class AmigoSet<E> extends AbstractSet<E> implements Cloneable, Serializab
     public boolean add(E e) {
         return null == map.put(e, PRESENT);
     }
-
-//    public HashMap<E, Object> getMap() {
-//        return map;
-//    }
 
     public AmigoSet(Collection<? extends E> collection) {
         int capacity = Math.max(16, (int)Math.ceil(collection.size()/.75f));
@@ -71,24 +67,75 @@ public class AmigoSet<E> extends AbstractSet<E> implements Cloneable, Serializab
         return clon;
     }
 
-    public static void main(String[] args) {
-        Collection<Integer> src = new HashSet<>();
-        src.add(1);
-        src.add(2);
-        src.add(3);
-        AmigoSet<Integer> dst = new AmigoSet<>(src);
-        dst.remove(3);
-        for (Integer i: dst
-             ) {
-            System.out.println(i);
-        }
+    private void readObject(ObjectInputStream inputStream)
+    {
         try {
-            Object clon = dst.clone();
-            for (Integer i: (AmigoSet<Integer>)clon
-            ) {
-                System.out.println(i);
+            inputStream.defaultReadObject();
+            float loadFactor = (float)inputStream.readObject();
+            int capacity = (int)inputStream.readObject();
+            map = new HashMap<>(capacity, loadFactor);
+            int size = (int)inputStream.readObject();
+            for (int i = 0; i < size; i++) {
+                E e = (E)inputStream.readObject();
+                map.put(e, PRESENT);
             }
-        } catch (CloneNotSupportedException e)
+        } catch (ClassNotFoundException | IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void writeObject(ObjectOutputStream outputStream)
+    {
+        try {
+            outputStream.defaultWriteObject();
+            outputStream.writeObject(HashMapReflectionHelper.callHiddenMethod(map, "loadFactor"));
+            outputStream.writeObject(HashMapReflectionHelper.callHiddenMethod(map, "capacity"));
+            outputStream.writeObject(map.size());
+            for (E e: map.keySet()
+                 ) {
+                outputStream.writeObject(e);
+            }
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void main(String[] args) {
+        Collection<Long> src = new HashSet<>();
+        src.add(1L);
+        src.add(2L);
+        src.add(3L);
+        AmigoSet dst = new AmigoSet<>(src);
+//        dst.remove(3);
+//        for (Integer i: dst
+//             ) {
+//            System.out.println(i);
+//        }
+//        try {
+//            Object clon = dst.clone();
+//            for (Integer i: (AmigoSet<Integer>)clon
+//            ) {
+//                System.out.println(i);
+//            }
+//        } catch (CloneNotSupportedException e)
+//        {
+//            e.printStackTrace();
+//        }
+
+        try {
+            FileOutputStream outputStream = new FileOutputStream("C:\\repos\\JavaRushTasks\\4.JavaCollections\\src\\com\\javarush\\task\\task37\\save.ser");
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+            objectOutputStream.writeObject(dst);
+
+            FileInputStream fileInputStream = new FileInputStream("C:\\repos\\JavaRushTasks\\4.JavaCollections\\src\\com\\javarush\\task\\task37\\save.ser");
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+            AmigoSet deserialized = (AmigoSet)objectInputStream.readObject();
+            System.out.println("Finish");
+        } catch (IOException | ClassNotFoundException e)
         {
             e.printStackTrace();
         }
