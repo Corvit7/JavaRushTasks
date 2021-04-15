@@ -10,7 +10,7 @@ public class ConvertableUtil {
         Map<K,V> result = new HashMap<>();
         for (V element: list
              ) {
-            result.put((K)element.getKey(), element);
+            result.put(element.getKey(), element);
         }
         return result;
     }
