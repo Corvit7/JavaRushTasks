@@ -1,6 +1,5 @@
 package com.javarush.task.task17.task1711;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-/* 
+/*
 CRUD 2
 */
 
@@ -20,97 +19,83 @@ public class Solution {
         allPeople.add(Person.createMale("Петров Петр", new Date()));  //сегодня родился    id=1
     }
 
-    public static void main(String[] args) {
-        //start here - начни тут
+    public static void main(String[] args) throws ParseException {
 
-        args = new String[] {"-c", "Василий", "м", "15/04/1990", "Алена", "ж", "08/05/1996"};
-//        args = new String[] {"-c", "Василий", "м", "15/04/1990", "Алена", "ж", "08/05/1996"};
-//        args = new String[] {"-u", "0", "Александр", "м", "21/07/1987", "1", "Елена", "ж", "08/09/1993"};
-//        args = new String[] {"-u", "1", "Елена", "ж", "08/09/1993"};
-//        args = new String[] {"-d", "0", "1"};
-//        args = new String[] {"-i", "0", "1"};
-        Date date = null;
-        int j = 0;
-        if(!args[0].equals("-c") && !args[0].equals("-u") && !args[0].equals("-d") && !args[0].equals("-i") )
-            throw new InternalError("не правильный первый параметр. Допустимы следующие: -c -u -d -i");
-        switch(args[0]){
+        switch ( args[0]) {
             case "-c":
-                synchronized (allPeople)
-                {
-                    if((args.length - 1) % 3 != 0)
-                        throw new InternalError("не правильное количество параметров");
-                    else
-                        for (int i = 1; i < args.length; i+=3) {
-                            if(!args[i+1].equals("м") && !args[i+1].equals("ж"))
-                                throw new InternalError("неправильный параметр. должно быть м или ж");
-                            else {
-                                try {
-                                    date = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse(args[i + 2]);
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                    throw new InternalError("некоорректный формат даты");
-                                }
-                                if (args[i + 1] == "м")
-                                    allPeople.add(Person.createMale(args[i], date));
-                                else
-                                    allPeople.add(Person.createFemale(args[i], date));
-                            }
+                synchronized  (allPeople){
+                    for (int i = 1; i < args.length; i=i+3) {
+
+
+                        if (args[i + 1].equals("м")) {
+                            Person persono = Person.createMale(args[i], new Solution().birthDate(args[i+2]));
+                            allPeople.add(persono);
+                            System.out.println(allPeople.indexOf(persono));
                         }
-                    for (Person person: allPeople
-                    ) {
-                        System.out.println(allPeople.indexOf(person));
+
+                        if (args[i + 1].equals("ж")) {
+                            Person persono = Person.createFemale(args[i], new Solution().birthDate(args[i+2]));
+                            allPeople.add(persono);
+                            System.out.println(allPeople.indexOf(persono));}
                     }
                 }
+
+
+
                 break;
             case "-u":
-                synchronized (allPeople) {
-                    if((args.length - 1) % 4 != 0)
-                        throw new InternalError("не правильное количество параметров");
-                    else
-                        for (int i = 1; i < args.length; i+=4) {
-                            j = Integer.parseInt(args[i]);
-                            if (!args[i + 2].equals("м") && !args[i + 2].equals("ж"))
-                                throw new InternalError("неправильный параметр. должно быть м или ж");
-                            else {
-                                try {
-                                    date = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).parse(args[i + 3]);
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                    throw new InternalError("некоорректный формат даты");
-                                }
-                                allPeople.get(j).setBirthDate(date);
-                                allPeople.get(j).setName(args[i+1]);
-                                if (args[i + 2] == "м")
-                                    allPeople.get(j).setSex(Sex.MALE);
-                                else
-                                    allPeople.get(Integer.parseInt(args[i])).setSex(Sex.FEMALE);
-                            }
-                        }
-                        }
+                synchronized (allPeople){
+                    for (int i = 1; i <args.length ; i=i+4) {
+
+
+                        allPeople.get(Integer.parseInt(args[i])).setBirthDate(new Solution().birthDate(args[i+3]));
+                        if (args[i+2]=="ж"){
+                            allPeople.get(Integer.parseInt(args[i])).setSex(Sex.FEMALE);}
+                        if (args[i+2]=="м"){
+                            allPeople.get(Integer.parseInt(args[i])).setSex(Sex.MALE);}
+
+                        allPeople.get(Integer.parseInt(args[i])).setName(args[i+1]);}}
+                break;
+
+
+            case "-d":
+                synchronized (allPeople){
+                    for (int i = 1; i < args.length; i++) {
+                        int eger = Integer.parseInt(args[i]);
+                        allPeople.get(eger).setSex (null);
+                        allPeople.get(eger).setName(null);
+                        allPeople.get(eger).setBirthDate(null);}  }
+
+
                 break;
             case "-i":
-                synchronized (allPeople)
-                {
+                synchronized (allPeople){
                     for (int i = 1; i < args.length; i++) {
-                        j = Integer.parseInt(args[i]);
-                        System.out.println(allPeople.get(j).getName());
-                        System.out.println(allPeople.get(j).getSex());
-                        System.out.println(allPeople.get(j).getBirthDate());
-                    }
-                }
+                        System.out.print (allPeople.get(Integer.parseInt(args[i])).getName()+" ");
+                        if (allPeople.get(Integer.parseInt(args[i])).getSex()== Sex.FEMALE)
+                        {System.out.print ("ж"+" ");}
+                        if (allPeople.get(Integer.parseInt(args[i])).getSex()== Sex.MALE)
+                        {System.out.print ("м"+" ");}
+                        System.out.println(  new Solution().birth(allPeople.get(Integer.parseInt(args[i])).getBirthDate()));}}
                 break;
-            case "-d":
-                synchronized (allPeople)
-                {
-                    for (int i = 1; i < args.length; i++) {
-                        j = Integer.parseInt(args[i]);
-                        allPeople.get(j).setName(null);
-                        allPeople.get(j).setSex(null);
-                        allPeople.get(j).setBirthDate(null);
-                    }
-                }
-            default:
-                break;
+
         }
+
+
+
     }
-}
+
+    public synchronized String birth (Date date) throws ParseException {
+        SimpleDateFormat dataformat = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+
+        return dataformat.format(date);}
+
+    public synchronized Date birthDate (String date) throws ParseException {
+        SimpleDateFormat dataformat = new SimpleDateFormat("dd/MM/yy");
+        Date birthdate = dataformat.parse(date);
+        return birthdate;}
+
+
+}//start here - начни тут
+
+
