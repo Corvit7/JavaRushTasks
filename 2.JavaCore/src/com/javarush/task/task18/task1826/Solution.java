@@ -12,33 +12,49 @@ import java.nio.file.Paths;
 public class Solution {
     public static void main(String[] args) throws IOException {
 
-        try(BufferedReader br = Files.newBufferedReader(Paths.get(args[1])))
-        {
-            try(BufferedWriter br2 = Files.newBufferedWriter(Paths.get(args[2])))
-            {
-                int val;
-                while ((val = br.read()) != -1)
-                {
-                        br2.write(encrypt(val, args[0]));
-                }
-            } catch (IOException e)
-            {
-                throw e;
+        byte k = 1;
+        FileInputStream fileInputStream = null;
+        FileOutputStream fileOutputStream = null;
+        BufferedInputStream reader = null;
+        BufferedOutputStream writer = null;
+
+        try {
+            int i;
+            fileInputStream = new FileInputStream(args[1]);
+            fileOutputStream = new FileOutputStream(args[2]);
+            reader = new BufferedInputStream(fileInputStream);
+            writer = new BufferedOutputStream(fileOutputStream);
+            byte[] bytes = new byte[0];
+            while (reader.available() > 0) {
+                bytes = new byte[reader.available()];
+                reader.read(bytes);
             }
-        } catch (IOException e)
-        {
-            throw e;
+            switch (args[0]){
+                case "-e":
+                    byte[] ep = new byte[bytes.length];
+                    for (i =0; i<ep.length; i++){
+                        ep[i] = (byte) (bytes[i] + k);
+                    } writer.write(ep);
+                    break;
+                case "-d":
+                    byte[] dp = new byte[bytes.length];
+                    for (i =0; i<dp.length; i++){
+                        dp[i] = (byte) (bytes[i] - k);
+                    } writer.write(dp);
+                    break;
+            }
+
+        } catch (FileNotFoundException e) { } catch (IOException e) { }
+        finally {
+            try {
+                reader.close();
+                writer.flush();
+                writer.close();
+                fileInputStream.close();
+                fileOutputStream.flush();
+                fileOutputStream.close();
+            } catch (IOException e) { }
         }
-
-    }
-
-    public static int encrypt(int chr, String mode)
-    {
-        if (mode.equals("-e"))
-            return chr + 9;
-        else if (mode.equals("-d"))
-            return chr - 9;
-        else return chr;
     }
 
 }
