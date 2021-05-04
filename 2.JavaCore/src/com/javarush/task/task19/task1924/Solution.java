@@ -5,15 +5,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-/* 
+/*
 Замена чисел
 */
 
 public class Solution {
     public static Map<Integer, String> map = new HashMap<Integer, String>();
 
-    static {
+    static{
         map.put(0, "ноль");
         map.put(1, "один");
         map.put(2, "два");
@@ -30,44 +32,28 @@ public class Solution {
     }
 
     public static void main(String[] args) throws IOException{
-
-        BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
-        String fileName;
-//        fileName = consoleReader.readLine();
-//        consoleReader.close();
-        fileName = "C:\\repos\\JavaRushTasks\\tests\\task19.task1924.txt";
-
-        ArrayList<String> words = new ArrayList<>();
-        ArrayList<String> words_res = new ArrayList<>();
-
-        try(BufferedReader file = new BufferedReader(new FileReader(fileName)))
-        {
-            while (file.ready())
-            {
-                words.addAll(Arrays.asList(file.readLine().split("\\s", -1)));
-                words.add("\n");
-            }
+        String name = null;
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))){
+            name = reader.readLine();
         }
-
-        for (String s : words
-             ) {
-            try {
-                if (map.get(Integer.parseInt(s)) != null)
-                    words_res.add(map.get(Integer.parseInt(s)));
-                else
-                    words_res.add(s);
-            } catch (NumberFormatException e)
-            {
-                words_res.add(s);
+        try(BufferedReader file = new BufferedReader(new FileReader(name))){
+            String line = null;
+            while((line = file.readLine())!= null){
+                String [] array  = line.trim().split("\\b");
+                for(int i = 0; i < array.length; i++){
+                    Pattern pattern = Pattern.compile("\\b\\d+\\b");
+                    Matcher matcher = pattern.matcher(array[i]);
+                    if (matcher.find()){
+                        int c = Integer.parseInt(array[i]);
+                        if(map.containsKey(c)){
+                            array[i] = map.get(c);
+                        }
+                    }
+                }
+                String newLine = "";
+                for(String x : array) newLine += x ;
+                System.out.println(newLine);
             }
-        }
-
-        for (String s: words_res
-             ) {
-            if(!s.equals("\n"))
-                System.out.print(s + " ");
-            else
-                System.out.print(s);
         }
 
     }
