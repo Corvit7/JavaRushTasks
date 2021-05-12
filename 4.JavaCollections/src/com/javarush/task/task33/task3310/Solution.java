@@ -1,6 +1,7 @@
 package com.javarush.task.task33.task3310;
 
 import com.javarush.task.task33.task3310.strategy.HashMapStorageStrategy;
+import com.javarush.task.task33.task3310.strategy.OurHashMapStorageStrategy;
 import com.javarush.task.task33.task3310.strategy.StorageStrategy;
 
 import java.io.IOException;
@@ -8,18 +9,18 @@ import java.util.*;
 
 public class Solution {
     public static void main(String[] args) {
-        HashMap<Integer, String> map = new HashMap<>();
-        for (int i = 0; i < 10000; i++) {
-            map.put(i, String.valueOf(i));
-        }
+//        HashMap<Integer, String> map = new HashMap<>();
+//        for (int i = 0; i < 10000; i++) {
+//            map.put(i, String.valueOf(i));
+//        }
 
-        System.out.println(map.size());
 //        System.out.println(map.);
 //        map.put("0", "zero");
 //        System.out.println(map.get("0").hashCode());
 //        System.out.println(hashCode("0".toCharArray()));
 //        System.out.println(tableSizeFor(9));
-//        testStrategy(new HashMapStorageStrategy(), 10000);
+        testStrategy(new HashMapStorageStrategy(), 10000);
+        testStrategy(new OurHashMapStorageStrategy(), 10000);
 //        System.out.println(HashMap.class.hashCode());
     }
 
