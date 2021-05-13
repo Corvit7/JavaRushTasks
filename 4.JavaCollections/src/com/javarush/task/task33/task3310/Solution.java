@@ -1,5 +1,6 @@
 package com.javarush.task.task33.task3310;
 
+import com.javarush.task.task33.task3310.strategy.Entry;
 import com.javarush.task.task33.task3310.strategy.HashMapStorageStrategy;
 import com.javarush.task.task33.task3310.strategy.OurHashMapStorageStrategy;
 import com.javarush.task.task33.task3310.strategy.StorageStrategy;
@@ -21,6 +22,11 @@ public class Solution {
 //        System.out.println(tableSizeFor(9));
         testStrategy(new HashMapStorageStrategy(), 10000);
         testStrategy(new OurHashMapStorageStrategy(), 10000);
+
+
+//        List<Entry> list = new ArrayList<>();
+//        list.add(new Entry())
+
 //        System.out.println(HashMap.class.hashCode());
     }
 
