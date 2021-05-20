@@ -2,6 +2,7 @@ package com.javarush.task.task33.task3310;
 
 import com.javarush.task.task33.task3310.strategy.*;
 import com.javarush.task.task33.task3310.tests.FunctionalTest;
+import com.javarush.task.task33.task3310.tests.SpeedTest;
 
 import java.io.IOException;
 import java.util.*;
@@ -14,13 +15,15 @@ public class Solution {
 //        testStrategy(new OurHashBiMapStorageStrategy(), 10000);
 //        testStrategy(new HashBiMapStorageStrategy(), 10000);
 //        testStrategy(new DualHashBidiMapStorageStrategy(), 10000);
-        FunctionalTest functionalTest = new FunctionalTest();
-        functionalTest.testDualHashBidiMapStorageStrategy();
-        functionalTest.testFileStorageStrategy();
-        functionalTest.testHashBiMapStorageStrategy();
-        functionalTest.testHashMapStorageStrategy();
-        functionalTest.testOurHashBiMapStorageStrategy();
-        functionalTest.testOurHashMapStorageStrategy();
+//        FunctionalTest functionalTest = new FunctionalTest();
+//        functionalTest.testDualHashBidiMapStorageStrategy();
+//        functionalTest.testFileStorageStrategy();
+//        functionalTest.testHashBiMapStorageStrategy();
+//        functionalTest.testHashMapStorageStrategy();
+//        functionalTest.testOurHashBiMapStorageStrategy();
+//        functionalTest.testOurHashMapStorageStrategy();
+        SpeedTest speedTest = new SpeedTest();
+        speedTest.testHashMapStorage();
     }
 
     public static Set<Long> getIds(Shortener shortener, Set<String> strings)
