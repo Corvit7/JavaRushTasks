@@ -1,6 +1,7 @@
 package com.javarush.task.task39.task3913;
 
 import com.javarush.task.task39.task3913.query.IPQuery;
+import com.javarush.task.task39.task3913.query.UserQuery;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,7 +20,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class LogParser implements IPQuery {
+public class LogParser implements IPQuery, UserQuery {
     private List<LogEntry> log = new ArrayList<>();
 
     public LogParser(Path logDir) {
@@ -30,39 +31,6 @@ public class LogParser implements IPQuery {
                         filter((s) -> s.toString().endsWith(".log")).
                         collect(Collectors.toList());
         } catch (IOException e) { e.printStackTrace(); }
-
-//                lines.forEach(new Consumer<String>() {
-//                    @Override
-//                    public void accept(String s) {
-//                        oneLine = Arrays.asList(s.split("\t"));
-//                        try {
-//                            log.add(new LogEntry(oneLine.get(0),
-//                                    oneLine.get(1),
-//                                    format.parse(oneLine.get(2)),
-//                                    oneLine.get(3),
-//                                    oneLine.get(4)));
-//                        } catch (ParseException ex ) { ex.printStackTrace();}
-//                    }
-//                });
-
-
-//        for (Path path: fileList
-//             ) {
-//            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy hh:mm:ss");
-//            try {
-//                Stream<String> lines = Files.lines(path);
-//                lines.forEach(s ->{
-//                    String[] oneLine = s.split("\t");
-//                    Date logDate;
-//                    try {
-//                        logDate = format.parse(oneLine[2]);
-//                        log.add(new LogEntry(oneLine[0],
-//                                oneLine[1],
-//                                logDate,
-//                                oneLine[3],
-//                                oneLine[4]));
-//                    } catch (ParseException e) {e.printStackTrace();}
-//                });
 
         for (Path path: fileList
         ) {
@@ -81,12 +49,6 @@ public class LogParser implements IPQuery {
 //        System.out.println("finish");
     }
 
-
-//    1.2.1. Метод getNumberOfUniqueIPs(Date after, Date before) должен возвращать количество уникальных IP адресов за выбранный период.
-//    Здесь и далее, если в методе есть параметры Date after и Date before, то нужно возвратить данные касающиеся только данного периода (включая даты after и before).
-//    Если параметр after равен null, то нужно обработать все записи, у которых дата меньше или равна before.
-//    Если параметр before равен null, то нужно обработать все записи, у которых дата больше или равна after.
-//    Если и after, и before равны null, то нужно обработать абсолютно все записи (без фильтрации по дате).
 
     private boolean dateBetweenDates(Date current, Date after, Date before) {
         if (after == null) {
@@ -153,5 +115,137 @@ public class LogParser implements IPQuery {
                     uniqueIps.add(entry.getIp());
         }
         return uniqueIps;
+    }
+
+
+    @Override
+    public Set<String> getAllUsers() {
+        TreeSet<String> users = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+             users.add(entry.getUserName());
+        }
+        return users;
+    }
+
+    @Override
+    public int getNumberOfUsers(Date after, Date before) {
+        TreeSet<String> users = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+             if(dateBetweenDates(entry.getLogDate(), after, before))
+                 users.add(entry.getUserName());
+        }
+        return users.size();
+    }
+
+    @Override
+    public int getNumberOfUserEvents(String user, Date after, Date before) {
+        TreeSet<Event> events = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getUserName().equals(user))
+                if(dateBetweenDates(entry.getLogDate(), after, before))
+                    events.add(entry.getEvent());
+        }
+        return events.size();
+    }
+
+    @Override
+    public Set<String> getUsersForIP(String ip, Date after, Date before) {
+        TreeSet<String> users = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getIp().equals(ip))
+                if(dateBetweenDates(entry.getLogDate(), after, before))
+                    users.add(entry.getUserName());
+        }
+        return users;
+    }
+
+    @Override
+    public Set<String> getLoggedUsers(Date after, Date before) {
+        TreeSet<String> users = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getEvent().equals(Event.LOGIN))
+                if(dateBetweenDates(entry.getLogDate(), after, before))
+                    users.add(entry.getUserName());
+        }
+        return users;
+    }
+
+    @Override
+    public Set<String> getDownloadedPluginUsers(Date after, Date before) {
+        TreeSet<String> users = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getEvent().equals(Event.DOWNLOAD_PLUGIN))
+                if(dateBetweenDates(entry.getLogDate(), after, before))
+                    users.add(entry.getUserName());
+        }
+        return users;
+    }
+
+    @Override
+    public Set<String> getWroteMessageUsers(Date after, Date before) {
+        TreeSet<String> users = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getEvent().equals(Event.WRITE_MESSAGE))
+                if(dateBetweenDates(entry.getLogDate(), after, before))
+                    users.add(entry.getUserName());
+        }
+        return users;
+    }
+
+    @Override
+    public Set<String> getSolvedTaskUsers(Date after, Date before) {
+        TreeSet<String> users = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getEvent().equals(Event.SOLVE_TASK))
+                if(dateBetweenDates(entry.getLogDate(), after, before))
+                    users.add(entry.getUserName());
+        }
+        return users;
+    }
+
+    @Override
+    public Set<String> getSolvedTaskUsers(Date after, Date before, int task) {
+        TreeSet<String> users = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getEvent().equals(Event.SOLVE_TASK))
+                if(entry.getTaskNum().equals(task))
+                    if(dateBetweenDates(entry.getLogDate(), after, before))
+                        users.add(entry.getUserName());
+        }
+        return users;
+    }
+
+    @Override
+    public Set<String> getDoneTaskUsers(Date after, Date before) {
+        TreeSet<String> users = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getEvent().equals(Event.DONE_TASK))
+                if(dateBetweenDates(entry.getLogDate(), after, before))
+                    users.add(entry.getUserName());
+        }
+        return users;
+    }
+
+    @Override
+    public Set<String> getDoneTaskUsers(Date after, Date before, int task) {
+        TreeSet<String> users = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getEvent().equals(Event.DONE_TASK))
+                if(entry.getTaskNum().equals(task))
+                    if(dateBetweenDates(entry.getLogDate(), after, before))
+                        users.add(entry.getUserName());
+        }
+        return users;
     }
 }
