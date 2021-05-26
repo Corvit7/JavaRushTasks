@@ -1,5 +1,6 @@
 package com.javarush.task.task39.task3913;
 
+import com.javarush.task.task39.task3913.query.DateQuery;
 import com.javarush.task.task39.task3913.query.IPQuery;
 import com.javarush.task.task39.task3913.query.UserQuery;
 
@@ -20,7 +21,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class LogParser implements IPQuery, UserQuery {
+public class LogParser implements IPQuery, UserQuery, DateQuery {
     private List<LogEntry> log = new ArrayList<>();
 
     public LogParser(Path logDir) {
@@ -247,5 +248,118 @@ public class LogParser implements IPQuery, UserQuery {
                         users.add(entry.getUserName());
         }
         return users;
+    }
+
+    @Override
+    public Set<Date> getDatesForUserAndEvent(String user, Event event, Date after, Date before) {
+        TreeSet<Date> dates = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getUserName().equals(user))
+                if(entry.getEvent().equals(event))
+                    if(dateBetweenDates(entry.getLogDate(), after, before))
+                        dates.add(entry.getLogDate());
+        }
+        return dates;
+    }
+
+    @Override
+    public Set<Date> getDatesWhenSomethingFailed(Date after, Date before) {
+        TreeSet<Date> dates = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getStatus().equals(Status.FAILED))
+                if(dateBetweenDates(entry.getLogDate(), after, before))
+                    dates.add(entry.getLogDate());
+        }
+        return dates;
+    }
+
+    @Override
+    public Set<Date> getDatesWhenErrorHappened(Date after, Date before) {
+        TreeSet<Date> dates = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getStatus().equals(Status.ERROR))
+                if(dateBetweenDates(entry.getLogDate(), after, before))
+                    dates.add(entry.getLogDate());
+        }
+        return dates;
+    }
+
+    @Override
+    public Date getDateWhenUserLoggedFirstTime(String user, Date after, Date before) {
+        TreeSet<Date> dates = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getUserName().equals(user))
+                if(entry.getEvent().equals(Event.LOGIN))
+                    if(dateBetweenDates(entry.getLogDate(), after, before))
+                        dates.add(entry.getLogDate());
+        }
+        if(dates.size()>0)
+            return dates.first();
+        else
+            return null;
+    }
+
+    @Override
+    public Date getDateWhenUserSolvedTask(String user, int task, Date after, Date before) {
+        TreeSet<Date> dates = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getUserName().equals(user))
+                if(entry.getEvent().equals(Event.SOLVE_TASK))
+                    if(entry.getTaskNum().equals(task))
+                        if(dateBetweenDates(entry.getLogDate(), after, before))
+                            dates.add(entry.getLogDate());
+        }
+        if(dates.size()>0)
+            return dates.first();
+        else
+            return null;
+    }
+
+    @Override
+    public Date getDateWhenUserDoneTask(String user, int task, Date after, Date before) {
+        TreeSet<Date> dates = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getUserName().equals(user))
+                if(entry.getEvent().equals(Event.DONE_TASK))
+                    if(entry.getTaskNum().equals(task))
+                        if(dateBetweenDates(entry.getLogDate(), after, before))
+                            dates.add(entry.getLogDate());
+        }
+        if (dates.size()>0)
+            return dates.first();
+        else
+            return null;
+    }
+
+    @Override
+    public Set<Date> getDatesWhenUserWroteMessage(String user, Date after, Date before) {
+        TreeSet<Date> dates = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getUserName().equals(user))
+                if(entry.getEvent().equals(Event.WRITE_MESSAGE))
+                    if(dateBetweenDates(entry.getLogDate(), after, before))
+                        dates.add(entry.getLogDate());
+        }
+        return dates;
+    }
+
+    @Override
+    public Set<Date> getDatesWhenUserDownloadedPlugin(String user, Date after, Date before) {
+        TreeSet<Date> dates = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getUserName().equals(user))
+                if(entry.getEvent().equals(Event.DOWNLOAD_PLUGIN))
+                    if(dateBetweenDates(entry.getLogDate(), after, before))
+                        dates.add(entry.getLogDate());
+        }
+        return dates;
     }
 }

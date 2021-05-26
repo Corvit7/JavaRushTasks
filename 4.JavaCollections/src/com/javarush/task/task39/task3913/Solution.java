@@ -21,6 +21,7 @@ public class Solution {
             System.out.println(logParser.getNumberOfUniqueIPs(null, null));
             System.out.println(logParser.getUniqueIPs(null, null));
             System.out.println(logParser.getLoggedUsers(null, null));
+            System.out.println(logParser.getDateWhenUserLoggedFirstTime("Dum-dum", null, null));
         } catch (ParseException e) {e.printStackTrace();}
     }
 }
