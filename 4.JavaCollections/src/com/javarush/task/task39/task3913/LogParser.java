@@ -1,28 +1,18 @@
 package com.javarush.task.task39.task3913;
 
-import com.javarush.task.task39.task3913.query.DateQuery;
-import com.javarush.task.task39.task3913.query.EventQuery;
-import com.javarush.task.task39.task3913.query.IPQuery;
-import com.javarush.task.task39.task3913.query.UserQuery;
+import com.javarush.task.task39.task3913.query.*;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+
 import java.io.IOException;
-import java.lang.reflect.GenericDeclaration;
-import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery {
+public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQuery {
     private List<LogEntry> log = new ArrayList<>();
 
     public LogParser(Path logDir) {
@@ -47,8 +37,6 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery {
 
             } catch (IOException e) {e.printStackTrace();}
         }
-
-//        System.out.println("finish");
     }
 
 
@@ -442,17 +430,6 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery {
 
     @Override
     public int getNumberOfSuccessfulAttemptToSolveTask(int task, Date after, Date before) {
-//        HashMap<Integer, Integer> map = new HashMap<>();
-//        for (LogEntry entry: log
-//        ) {
-//            if(dateBetweenDates(entry.getLogDate(), after, before))
-//                if(entry.getEvent().equals(Event.DONE_TASK))
-//                    if(map.containsKey(entry.getTaskNum()))
-//                        map.put(entry.getTaskNum(),map.get(entry.getTaskNum())+1);
-//                    else
-//                        map.put(entry.getTaskNum(), 1);
-//        }
-//        return map.getOrDefault(task, 0);
         Map<Integer, Integer> map = getAllDoneTasksAndTheirNumber(after, before);
         return map.getOrDefault(task, 0);
     }
@@ -486,4 +463,69 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery {
         }
         return map;
     }
+
+    public Set<Date> getAllUniqueDates(Date after, Date before) {
+        TreeSet<Date> dates = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(dateBetweenDates(entry.getLogDate(), after, before))
+                dates.add(entry.getLogDate());
+        }
+        return dates;
+    }
+
+    public Set<Status> getAllUniqueStatuses(Date after, Date before) {
+        TreeSet<Status> statuses = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(dateBetweenDates(entry.getLogDate(), after, before))
+                statuses.add(entry.getStatus());
+        }
+        return statuses;
+    }
+
+//    @Override
+//    public Set<Object> execute(String query) {
+//        String[] parts = query.split(" ");
+//        Set<Object> result = new HashSet<>();
+//        switch (parts[1])
+//        {
+//            case "ip": Collections.addAll(result, getUniqueIPs(null, null));
+//            break;
+//
+//            case "user": Collections.addAll(result, getAllUsers());
+//            break;
+//
+//            case "date": Collections.addAll(result, getAllUniqueDates(null, null));
+//            break;
+//
+//            case "event": Collections.addAll(result, getAllEvents(null, null));
+//            break;
+//
+//            case "status": Collections.addAll(result, getAllUniqueStatuses(null, null));
+//            break;
+//
+//        }
+//        return result;
+//    }
+
+    @Override
+    public Set<Object> execute(String query) {
+        String[] parts = query.split(" ");
+        switch (parts[1])
+        {
+            case "ip": return new HashSet<>(getUniqueIPs(null, null));
+
+            case "user":  return new HashSet<>(getAllUsers());
+
+            case "date": return new HashSet<>(getAllUniqueDates(null, null));
+
+            case "event": return new HashSet<>(getAllEvents(null, null));
+
+            case "status": return new HashSet<>(getAllUniqueStatuses(null, null));
+        }
+
+        return null;
+    }
+
 }

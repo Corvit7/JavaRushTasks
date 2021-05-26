@@ -24,6 +24,7 @@ public class Solution {
             System.out.println(logParser.getDateWhenUserLoggedFirstTime("Dum-dum", null, null));
             System.out.println(logParser.getNumberOfAttemptToSolveTask(7, null, null));
             System.out.println(logParser.getNumberOfSuccessfulAttemptToSolveTask(7, null, null));
+            System.out.println(logParser.execute("get ip"));
         } catch (ParseException e) {e.printStackTrace();}
     }
 }
