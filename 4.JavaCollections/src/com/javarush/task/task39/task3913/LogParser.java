@@ -1,6 +1,7 @@
 package com.javarush.task.task39.task3913;
 
 import com.javarush.task.task39.task3913.query.DateQuery;
+import com.javarush.task.task39.task3913.query.EventQuery;
 import com.javarush.task.task39.task3913.query.IPQuery;
 import com.javarush.task.task39.task3913.query.UserQuery;
 
@@ -21,7 +22,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class LogParser implements IPQuery, UserQuery, DateQuery {
+public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery {
     private List<LogEntry> log = new ArrayList<>();
 
     public LogParser(Path logDir) {
@@ -361,5 +362,128 @@ public class LogParser implements IPQuery, UserQuery, DateQuery {
                         dates.add(entry.getLogDate());
         }
         return dates;
+    }
+
+    @Override
+    public int getNumberOfAllEvents(Date after, Date before) {
+        TreeSet<Event> events = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(dateBetweenDates(entry.getLogDate(), after, before))
+                events.add(entry.getEvent());
+        }
+        return events.size();
+    }
+
+    @Override
+    public Set<Event> getAllEvents(Date after, Date before) {
+        TreeSet<Event> events = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(dateBetweenDates(entry.getLogDate(), after, before))
+                events.add(entry.getEvent());
+        }
+        return events;
+    }
+
+    @Override
+    public Set<Event> getEventsForIP(String ip, Date after, Date before) {
+        TreeSet<Event> events = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getIp().equals(ip))
+                if(dateBetweenDates(entry.getLogDate(), after, before))
+                    events.add(entry.getEvent());
+        }
+        return events;
+    }
+
+    @Override
+    public Set<Event> getEventsForUser(String user, Date after, Date before) {
+        TreeSet<Event> events = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getUserName().equals(user))
+                if(dateBetweenDates(entry.getLogDate(), after, before))
+                    events.add(entry.getEvent());
+        }
+        return events;
+    }
+
+    @Override
+    public Set<Event> getFailedEvents(Date after, Date before) {
+        TreeSet<Event> events = new TreeSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getStatus().equals(Status.FAILED))
+                if(dateBetweenDates(entry.getLogDate(), after, before))
+                    events.add(entry.getEvent());
+        }
+        return events;
+    }
+
+    @Override
+    public Set<Event> getErrorEvents(Date after, Date before) {
+        HashSet<Event> events = new HashSet<>();
+        for (LogEntry entry: log
+        ) {
+            if(entry.getStatus().equals(Status.ERROR))
+                if(dateBetweenDates(entry.getLogDate(), after, before))
+                    events.add(entry.getEvent());
+        }
+        return events;
+    }
+
+    @Override
+    public int getNumberOfAttemptToSolveTask(int task, Date after, Date before) {
+        Map<Integer, Integer> map = getAllSolvedTasksAndTheirNumber(after, before);
+        return map.getOrDefault(task, 0);
+    }
+
+    @Override
+    public int getNumberOfSuccessfulAttemptToSolveTask(int task, Date after, Date before) {
+//        HashMap<Integer, Integer> map = new HashMap<>();
+//        for (LogEntry entry: log
+//        ) {
+//            if(dateBetweenDates(entry.getLogDate(), after, before))
+//                if(entry.getEvent().equals(Event.DONE_TASK))
+//                    if(map.containsKey(entry.getTaskNum()))
+//                        map.put(entry.getTaskNum(),map.get(entry.getTaskNum())+1);
+//                    else
+//                        map.put(entry.getTaskNum(), 1);
+//        }
+//        return map.getOrDefault(task, 0);
+        Map<Integer, Integer> map = getAllDoneTasksAndTheirNumber(after, before);
+        return map.getOrDefault(task, 0);
+    }
+
+    @Override
+    public Map<Integer, Integer> getAllSolvedTasksAndTheirNumber(Date after, Date before) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (LogEntry entry: log
+             ) {
+            if(dateBetweenDates(entry.getLogDate(), after, before))
+                if(entry.getEvent().equals(Event.SOLVE_TASK))
+                    if(map.containsKey(entry.getTaskNum()))
+                        map.put(entry.getTaskNum(),map.get(entry.getTaskNum())+1);
+                    else
+                        map.put(entry.getTaskNum(), 1);
+        }
+        return map;
+    }
+
+    @Override
+    public Map<Integer, Integer> getAllDoneTasksAndTheirNumber(Date after, Date before) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (LogEntry entry: log
+        ) {
+            if(dateBetweenDates(entry.getLogDate(), after, before))
+                if(entry.getEvent().equals(Event.DONE_TASK))
+                    if(map.containsKey(entry.getTaskNum()))
+                        map.put(entry.getTaskNum(),map.get(entry.getTaskNum())+1);
+                    else
+                        map.put(entry.getTaskNum(), 1);
+        }
+        return map;
     }
 }
