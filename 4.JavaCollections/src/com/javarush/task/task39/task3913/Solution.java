@@ -25,6 +25,10 @@ public class Solution {
             System.out.println(logParser.getNumberOfAttemptToSolveTask(7, null, null));
             System.out.println(logParser.getNumberOfSuccessfulAttemptToSolveTask(7, null, null));
             System.out.println(logParser.execute("get ip"));
+            System.out.println(logParser.execute("get ip for status = \"FAILED\""));
+            System.out.println(logParser.execute("get ip for user = \"Amigo\""));
+            System.out.println(logParser.execute("get ip for event = \"LOGIN\""));
+            System.out.println(logParser.execute("get ip for date = \"05.01.2029 20:22:55\""));
         } catch (ParseException e) {e.printStackTrace();}
     }
 }

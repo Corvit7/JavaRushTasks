@@ -509,23 +509,152 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
 //        return result;
 //    }
 
+//    @Override
+//    public Set<Object> execute(String query) {
+//        String[] parts = query.split(" ");
+//        switch (parts[1])
+//        {
+//            case "ip": return new HashSet<>(getUniqueIPs(null, null));
+//
+//            case "user":  return new HashSet<>(getAllUsers());
+//
+//            case "date": return new HashSet<>(getAllUniqueDates(null, null));
+//
+//            case "event": return new HashSet<>(getAllEvents(null, null));
+//
+//            case "status": return new HashSet<>(getAllUniqueStatuses(null, null));
+//        }
+//
+//        return null;
+//    }
+
     @Override
     public Set<Object> execute(String query) {
+        Set<Object> result = null;
         String[] parts = query.split(" ");
-        switch (parts[1])
-        {
-            case "ip": return new HashSet<>(getUniqueIPs(null, null));
+        String[] parts_predicate = query.split("=");
+        Set<LogEntry> filterApplied = new HashSet<>();
+        Set<Object> filterApplied2 = new HashSet<>();
+        if (parts.length == 2) {
+            switch (parts[1]) {
+                case "ip":
+                    result = new HashSet<>(getUniqueIPs(null, null));
+                    break;
 
-            case "user":  return new HashSet<>(getAllUsers());
+                case "user":
+                    result = new HashSet<>(getAllUsers());
+                    break;
 
-            case "date": return new HashSet<>(getAllUniqueDates(null, null));
+                case "date":
+                    result = new HashSet<>(getAllUniqueDates(null, null));
+                    break;
 
-            case "event": return new HashSet<>(getAllEvents(null, null));
+                case "event":
+                    result = new HashSet<>(getAllEvents(null, null));
+                    break;
 
-            case "status": return new HashSet<>(getAllUniqueStatuses(null, null));
+                case "status":
+                    result = new HashSet<>(getAllUniqueStatuses(null, null));
+                    break;
+            }
         }
 
-        return null;
+
+        else {
+            Object filter = null;
+
+            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+            try {
+                switch (parts[3])
+                {
+                    case "ip": filter = parts_predicate[1].substring(parts_predicate[1].indexOf("\"", 1)+1, parts_predicate[1].lastIndexOf("\""));
+                        break;
+
+                    case "user": filter = parts_predicate[1].substring(parts_predicate[1].indexOf("\"", 1)+1, parts_predicate[1].lastIndexOf("\""));
+                        break;
+
+                    case "date": filter = format.parse(parts_predicate[1].substring(parts_predicate[1].indexOf("\"", 1)+1, parts_predicate[1].lastIndexOf("\"")));
+                        break;
+
+                    case "event":
+                        switch (parts_predicate[1].substring(parts_predicate[1].indexOf("\"", 1)+1, parts_predicate[1].lastIndexOf("\"")))
+                        {
+                            case "DONE_TASK": filter =  Event.DONE_TASK;
+                            break;
+                            case "DOWNLOAD_PLUGIN": filter = Event.DOWNLOAD_PLUGIN;
+                            break;
+                            case "LOGIN": filter = Event.LOGIN;
+                            break;
+                            case "SOLVE_TASK": filter = Event.SOLVE_TASK;
+                            break;
+                            case "WRITE_MESSAGE": filter = Event.WRITE_MESSAGE;
+                            break;
+                        }
+
+                    case "status":
+                        switch (parts_predicate[1].substring(parts_predicate[1].indexOf("\"", 1)+1, parts_predicate[1].lastIndexOf("\"")))
+                        {
+                            case "ERROR": filter = Status.ERROR;
+                            break;
+                            case "FAILED": filter = Status.FAILED;
+                            break;
+                            case "OK": filter = Status.OK;
+                            break;
+                        }
+
+                }
+
+                if (parts[2].equals("for")) {
+                    final Object finalFilter = filter;
+                    switch (parts[3]) {
+                        case "ip":
+                            filterApplied = log.stream().filter(entry -> entry.getIp().equals(finalFilter)).collect(Collectors.toSet());
+                        break;
+
+                        case "user":
+                            filterApplied = log.stream().filter(entry -> entry.getUserName().equals(finalFilter)).collect(Collectors.toSet());
+                            break;
+
+                        case "date":
+                            filterApplied = log.stream().filter(entry -> entry.getLogDate().equals(finalFilter)).collect(Collectors.toSet());
+                            break;
+
+                        case "event":
+                            filterApplied = log.stream().filter(entry -> entry.getEvent().equals(finalFilter)).collect(Collectors.toSet());
+                            break;
+
+                        case "status":
+                            filterApplied = log.stream().filter(entry -> entry.getStatus().equals(finalFilter)).collect(Collectors.toSet());
+                            break;
+                    }
+
+                    switch (parts[1])
+                    {
+                        case "ip": filterApplied2 = filterApplied.stream().map(LogEntry::getIp).collect(Collectors.toSet());
+                        break;
+
+                        case "user": filterApplied2 = filterApplied.stream().map(LogEntry::getUserName).collect(Collectors.toSet());
+                            break;
+
+                        case "date": filterApplied2 = filterApplied.stream().map(LogEntry::getLogDate).collect(Collectors.toSet());
+                            break;
+
+                        case "event": filterApplied2 = filterApplied.stream().map(LogEntry::getEvent).collect(Collectors.toSet());
+                            break;
+
+                        case "status": filterApplied2 = filterApplied.stream().map(LogEntry::getStatus).collect(Collectors.toSet());
+                            break;
+                    }
+                }
+
+                result = filterApplied2;
+
+            } catch (ParseException e) {e.printStackTrace();}
+
+
+        }
+
+        return result;
     }
 
 }
