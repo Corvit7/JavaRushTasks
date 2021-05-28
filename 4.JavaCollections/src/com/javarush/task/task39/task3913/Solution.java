@@ -26,9 +26,14 @@ public class Solution {
             System.out.println(logParser.getNumberOfSuccessfulAttemptToSolveTask(7, null, null));
             System.out.println(logParser.execute("get ip"));
             System.out.println(logParser.execute("get ip for status = \"FAILED\""));
-            System.out.println(logParser.execute("get ip for user = \"Amigo\""));
+            System.out.println(logParser.execute("get ip for user = \"Eduard Petrovich Morozko\""));
             System.out.println(logParser.execute("get ip for event = \"LOGIN\""));
             System.out.println(logParser.execute("get ip for date = \"05.01.2029 20:22:55\""));
+
+            System.out.println(LogParser.dateBefore("get ip for user = \"Eduard Petrovich Morozko\" and date between \"11.12.2013 0:00:00\" and \"03.01.2014 23:59:59\""));
+            System.out.println(LogParser.dateAfter("get ip for user = \"Eduard Petrovich Morozko\" and date between \"11.12.2013 0:00:00\" and \"03.01.2014 23:59:59\""));
+
+            System.out.println(logParser.execute("get ip for user = \"Eduard Petrovich Morozko\" and date between \"01.09.2013 0:00:00\" and \"03.01.2014 23:59:59\""));
         } catch (ParseException e) {e.printStackTrace();}
     }
 }

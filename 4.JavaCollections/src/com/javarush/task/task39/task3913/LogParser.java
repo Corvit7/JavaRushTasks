@@ -1,6 +1,7 @@
 package com.javarush.task.task39.task3913;
 
 import com.javarush.task.task39.task3913.query.*;
+import sun.rmi.runtime.Log;
 
 
 import java.io.IOException;
@@ -9,6 +10,8 @@ import java.nio.file.Path;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -528,6 +531,25 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
 //        return null;
 //    }
 
+    public static Date dateAfter(String query) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        Matcher m = Pattern.compile("(and date between) \"((\\d{1,2}\\.){2}\\d{1,6} (\\d{1,2}:?){3})\"").matcher(query);
+        if (m.find()) {
+            return format.parse(m.group(2));
+        }
+        return null;
+
+    }
+
+    public static Date dateBefore(String query) throws ParseException{
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        Matcher m = Pattern.compile("(and date between) \"((\\d{1,2}\\.){2}\\d{1,6} (\\d{1,2}:?){3})\" and \"((\\d{1,2}\\.){2}\\d{1,6} (\\d{1,2}:?){3})\"").matcher(query);
+        if (m.find()) {
+            return format.parse(m.group(5));
+        }
+        return null;
+    }
+
     @Override
     public Set<Object> execute(String query) {
         Set<Object> result = null;
@@ -567,17 +589,17 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
             try {
                 switch (parts[3])
                 {
-                    case "ip": filter = parts_predicate[1].substring(parts_predicate[1].indexOf("\"", 1)+1, parts_predicate[1].lastIndexOf("\""));
+                    case "ip": filter = parts_predicate[1].substring(parts_predicate[1].indexOf("\"", 1)+1, parts_predicate[1].indexOf("\"", 2));
                         break;
 
-                    case "user": filter = parts_predicate[1].substring(parts_predicate[1].indexOf("\"", 1)+1, parts_predicate[1].lastIndexOf("\""));
+                    case "user": filter = parts_predicate[1].substring(parts_predicate[1].indexOf("\"", 1)+1, parts_predicate[1].indexOf("\"", 2));
                         break;
 
                     case "date": filter = format.parse(parts_predicate[1].substring(parts_predicate[1].indexOf("\"", 1)+1, parts_predicate[1].lastIndexOf("\"")));
                         break;
 
                     case "event":
-                        switch (parts_predicate[1].substring(parts_predicate[1].indexOf("\"", 1)+1, parts_predicate[1].lastIndexOf("\"")))
+                        switch (parts_predicate[1].substring(parts_predicate[1].indexOf("\"", 1)+1, parts_predicate[1].indexOf("\"", 2)))
                         {
                             case "DONE_TASK": filter =  Event.DONE_TASK;
                             break;
@@ -592,7 +614,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
                         }
 
                     case "status":
-                        switch (parts_predicate[1].substring(parts_predicate[1].indexOf("\"", 1)+1, parts_predicate[1].lastIndexOf("\"")))
+                        switch (parts_predicate[1].substring(parts_predicate[1].indexOf("\"", 1)+1, parts_predicate[1].indexOf("\"", 2)))
                         {
                             case "ERROR": filter = Status.ERROR;
                             break;
@@ -627,6 +649,11 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
                             filterApplied = log.stream().filter(entry -> entry.getStatus().equals(finalFilter)).collect(Collectors.toSet());
                             break;
                     }
+
+                    Date dateBefore = LogParser.dateBefore(query);
+                    Date dateAfter = LogParser.dateAfter(query);
+
+                    filterApplied = filterApplied.stream().filter(entry -> dateBetweenDates(entry.getLogDate(), dateAfter, dateBefore)).collect(Collectors.toSet());
 
                     switch (parts[1])
                     {
