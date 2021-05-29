@@ -1,0 +1,32 @@
+package com.javarush.task.task37.task3706;
+
+import java.util.Arrays;
+import java.util.List;
+
+/* 
+Давно забытый Array
+*/
+
+public class Solution {
+    public static void main(String[] args) {
+        List<Number> numbers = Arrays.<Number>asList(1, 2, 3);
+        addDataToList(numbers, getData());
+        System.out.println(numbers);
+    }
+
+    public static Number[] getData() {
+//        Number[] arr = {4,5,6};
+//        return arr;
+        Number[] numbers = new Number[3];
+        for(int i = 0; i < numbers.length; i++){
+            return new Number[i];
+        }
+        return numbers;
+    }
+
+    public static void addDataToList(List<Number> list, Number... data) {
+        for (Number number : data) {
+            list.add(number);
+        }
+    }
+}
