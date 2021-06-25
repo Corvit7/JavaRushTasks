@@ -26,20 +26,12 @@ public class Controller {
     }
 
     public void scan() {
-//        List<Vacancy> totalVacList = new ArrayList<>();
-//
-//        for (Provider provider : providers)
-//            totalVacList.addAll(provider.getJavaVacancies(searchString));
-//
-//        System.out.println(totalVacList.size());
 
         List<Vacancy> vacancies = Arrays.stream(providers)
-                .map(provider -> provider.getJavaVacancies(""))
+                .map(provider -> provider.getJavaVacancies("Kiev"))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
-
         System.out.println(vacancies.size());
-
     }
 
 }
