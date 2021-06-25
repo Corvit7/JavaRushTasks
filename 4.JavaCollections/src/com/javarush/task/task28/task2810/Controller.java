@@ -3,19 +3,17 @@ package com.javarush.task.task28.task2810;
 import com.javarush.task.task28.task2810.model.Provider;
 import com.javarush.task.task28.task2810.vo.Vacancy;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Controller {
+
     private Provider[] providers;
 
-    public Controller(Provider ... providers) {
-        if (providers.length == 0)
-            throw new IllegalArgumentException();
-        else
-            this.providers = providers;
+    public Controller(Provider... providers) {
+        if (providers.length == 0) throw new IllegalArgumentException();
+        this.providers = providers;
     }
 
     @Override
@@ -26,12 +24,10 @@ public class Controller {
     }
 
     public void scan() {
-
-        List<Vacancy> vacancies = Arrays.stream(providers)
-                .map(provider -> provider.getJavaVacancies("Kiev"))
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
+        List<Vacancy> vacancies = new ArrayList<>();
+        for (Provider provider : providers) {
+            vacancies.addAll(provider.getJavaVacancies("MyTown"));
+        }
         System.out.println(vacancies.size());
     }
-
 }
