@@ -18,10 +18,6 @@ public class Model {
     }
 
     public void selectCity(String city) {
-//        for (Provider provider: providers
-//             ) {
-//            this.view.update(provider.getJavaVacancies(city));
-//        }
         List<Vacancy> vacancyList = new ArrayList<>();
         for (Provider provider : providers)
             vacancyList.addAll(provider.getJavaVacancies(city));
