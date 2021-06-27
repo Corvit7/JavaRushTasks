@@ -2,6 +2,10 @@ package com.javarush.task.task28.task2810.view;
 
 import com.javarush.task.task28.task2810.Controller;
 import com.javarush.task.task28.task2810.vo.Vacancy;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,11 +34,47 @@ public class HtmlView implements View {
     }
 
     public void userCitySelectEmulationMethod() {
-        controller.onCitySelect("Odessa");
+        controller.onCitySelect("Kiev");
     }
 
     private String getUpdatedFileContent(List<Vacancy> vacancies) {
-        return null;
+
+        try {
+            Document doc = getDocument();
+            Elements templateHidden = doc.getElementsByClass("template");
+            Element template = templateHidden.clone().removeAttr("style").removeClass("template").get(0);
+
+            //remove all prev vacancies
+            Elements prevVacancies = doc.getElementsByClass("vacancy");
+
+            for (Element redundant : prevVacancies) {
+                if (!redundant.hasClass("template")) {
+                    redundant.remove();
+                }
+            }
+
+            //add new vacancies
+            for (Vacancy vacancy : vacancies) {
+                Element vacancyElement = template.clone();
+
+                Element vacancyLink = vacancyElement.getElementsByAttribute("href").get(0);
+                vacancyLink.appendText(vacancy.getTitle());
+                vacancyLink.attr("href", vacancy.getUrl());
+                Element city = vacancyElement.getElementsByClass("city").get(0);
+                city.appendText(vacancy.getCity());
+                Element companyName = vacancyElement.getElementsByClass("companyName").get(0);
+                companyName.appendText(vacancy.getCompanyName());
+                Elements salaryEls = vacancyElement.getElementsByClass("salary");
+                Element salary = salaryEls.get(0);
+                salary.appendText(vacancy.getSalary());
+
+                templateHidden.before(vacancyElement.outerHtml());
+            }
+            return doc.html();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "Some exception occurred";
     }
 
     private void updateFile(String content) {
@@ -45,4 +85,9 @@ public class HtmlView implements View {
             e.printStackTrace();
         }
     }
+
+    protected Document getDocument() throws IOException {
+        return Jsoup.parse(new File(filePath), "UTF-8", "");
+    }
+
 }

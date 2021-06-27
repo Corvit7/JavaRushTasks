@@ -1,36 +1,625 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="utf-8">
-    <title>Вакансии</title>
-</head>
-<body>
-<table>
-    <tr>
-        <th>Title</th>
-        <th>City</th>
-        <th>Company Name</th>
-        <th>Salary</th>
+ <head> 
+  <meta charset="utf-8"> 
+  <title>Вакансии</title> 
+ </head> 
+ <body> 
+  <table> 
+   <tbody> 
+    <tr> 
+     <th>Title</th> 
+     <th>City</th> 
+     <th>Company Name</th> 
+     <th>Salary</th> 
+    </tr>                                                                                                     
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45725974?query=java%20Kiev">Android Developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Appercut sp. z o.o.</td> 
+     <td class="salary">3 500 – 5 000 USD</td> 
     </tr>
-    <tr class="vacancy">
-        <td class="title"><a href="http://javarush.ru">Junior Java Developer</a></td>
-        <td class="city">Entire World</td>
-        <td class="companyName">JavaRush</td>
-        <td class="salary">1 million</td>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45321089?query=java%20Kiev">Java-разработчик (Senior)</a></td> 
+     <td class="city">Москва</td> 
+     <td class="companyName">ZeroHub</td> 
+     <td class="salary">260 000 – 350 000 руб.</td> 
     </tr>
-    <tr class="vacancy">
-        <td class="title"><a href="http://javarush.ru">Junior Java Developer 2</a></td>
-        <td class="city">Entire World</td>
-        <td class="companyName">JavaRush</td>
-        <td class="salary">1к</td>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45321101?query=java%20Kiev">Java-разработчик (Senior)</a></td> 
+     <td class="city">Санкт-Петербург</td> 
+     <td class="companyName">ZeroHub</td> 
+     <td class="salary">260 000 – 350 000 руб.</td> 
     </tr>
-
-    <tr class="vacancy template" style="display: none">
-        <td class="title"><a href="url"></a></td>
-        <td class="city"></td>
-        <td class="companyName"></td>
-        <td class="salary"></td>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45108692?query=java%20Kiev">Java Developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">АDAPTIVE APPLICATIONS</td> 
+     <td class="salary">2 000 – 2 500 USD</td> 
     </tr>
-</table>
-</body>
-</html>[com.javarush.task.task28.task2810.vo.Vacancy@bde139a5, com.javarush.task.task28.task2810.vo.Vacancy@602c2f28, com.javarush.task.task28.task2810.vo.Vacancy@57b532ac, com.javarush.task.task28.task2810.vo.Vacancy@365f0a3e, com.javarush.task.task28.task2810.vo.Vacancy@d9690384, com.javarush.task.task28.task2810.vo.Vacancy@17f63a45, com.javarush.task.task28.task2810.vo.Vacancy@e093e396, com.javarush.task.task28.task2810.vo.Vacancy@87842df2, com.javarush.task.task28.task2810.vo.Vacancy@e32a604c, com.javarush.task.task28.task2810.vo.Vacancy@9bc9d871, com.javarush.task.task28.task2810.vo.Vacancy@3303cbaf, com.javarush.task.task28.task2810.vo.Vacancy@eae29e6d, com.javarush.task.task28.task2810.vo.Vacancy@6d1a63b4, com.javarush.task.task28.task2810.vo.Vacancy@c2968fae, com.javarush.task.task28.task2810.vo.Vacancy@4f4b28e8, com.javarush.task.task28.task2810.vo.Vacancy@4baa5491, com.javarush.task.task28.task2810.vo.Vacancy@bd406670, com.javarush.task.task28.task2810.vo.Vacancy@ecc07df3, com.javarush.task.task28.task2810.vo.Vacancy@499a05a2, com.javarush.task.task28.task2810.vo.Vacancy@8a5f90f][com.javarush.task.task28.task2810.vo.Vacancy@bde139a5, com.javarush.task.task28.task2810.vo.Vacancy@602c2f28, com.javarush.task.task28.task2810.vo.Vacancy@57b532ac, com.javarush.task.task28.task2810.vo.Vacancy@365f0a3e, com.javarush.task.task28.task2810.vo.Vacancy@d9690384, com.javarush.task.task28.task2810.vo.Vacancy@17f63a45, com.javarush.task.task28.task2810.vo.Vacancy@e093e396, com.javarush.task.task28.task2810.vo.Vacancy@87842df2, com.javarush.task.task28.task2810.vo.Vacancy@e32a604c, com.javarush.task.task28.task2810.vo.Vacancy@9bc9d871, com.javarush.task.task28.task2810.vo.Vacancy@3303cbaf, com.javarush.task.task28.task2810.vo.Vacancy@eae29e6d, com.javarush.task.task28.task2810.vo.Vacancy@6d1a63b4, com.javarush.task.task28.task2810.vo.Vacancy@c2968fae, com.javarush.task.task28.task2810.vo.Vacancy@4f4b28e8, com.javarush.task.task28.task2810.vo.Vacancy@4baa5491, com.javarush.task.task28.task2810.vo.Vacancy@bd406670, com.javarush.task.task28.task2810.vo.Vacancy@ecc07df3, com.javarush.task.task28.task2810.vo.Vacancy@499a05a2, com.javarush.task.task28.task2810.vo.Vacancy@8a5f90f]
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45742791?query=java%20Kiev">Java Developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Andersen</td> 
+     <td class="salary">до 4 500 USD</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45503270?query=java%20Kiev">Java-разработчик</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Маглар</td> 
+     <td class="salary">от 77 280 грн.</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45234125?query=java%20Kiev">Java-разработчик</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Wikiroutes</td> 
+     <td class="salary">от 2 000 USD</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45720170?query=java%20Kiev">Java Intern</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Luxoft</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45301691?query=java%20Kiev">Strong Middle Java Developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">ООО&nbsp;WORLD STAFF®</td> 
+     <td class="salary">3 000 – 3 500 USD</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45572690?query=java%20Kiev">Java Developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">SWAN Software Solutions</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45189732?query=java%20Kiev">Java Engineer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Luxoft</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45572692?query=java%20Kiev">Java Developer</a></td> 
+     <td class="city">Ужгород</td> 
+     <td class="companyName">SWAN Software Solutions</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45572696?query=java%20Kiev">Java Developer</a></td> 
+     <td class="city">Черкассы</td> 
+     <td class="companyName">SWAN Software Solutions</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45063533?query=java%20Kiev">Strong Middle Java developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">CS</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45121273?query=java%20Kiev">Java developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">АО&nbsp;Генеральна дирекція Укрпошта</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45104118?query=java%20Kiev">Junior Java developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">ТОВ «ФІНАНСОВЕ СЕРВІС БЮРО»</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45739681?query=java%20Kiev">Senior Java Software Engineer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">АНКОР в Украине</td> 
+     <td class="salary">2 500 – 5 000 грн.</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45709804?query=java%20Kiev">Android developer (Junior / Middle)</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Kit store</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45433430?query=java%20Kiev">Java Developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Onseo</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45744290?query=java%20Kiev">CLN Java Developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Cloud Linux</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45350035?query=java%20Kiev">Oracle PL/SQL Developer + Java</a></td> 
+     <td class="city">Киев, Контрактовая площадь</td> 
+     <td class="companyName">Райффайзен Банк Аваль</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45311310?query=java%20Kiev">Middle / Senior Java Developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Первый Украинский Международный банк</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/44993119?query=java%20Kiev">Senior Java developer for Tango</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Onseo</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45566898?query=java%20Kiev">Senior Java or Scala Developer for Leading Advertising Platform</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">ООО&nbsp;Newxel</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45428862?query=java%20Kiev">Senior Java developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Onseo</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/44920919?query=java%20Kiev">Android developer (Kotlin)</a></td> 
+     <td class="city">Москва</td> 
+     <td class="companyName">B2Broker Москва</td> 
+     <td class="salary">200 000 – 250 000 руб.</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/44742857?query=java%20Kiev">Android Developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Polytech Software</td> 
+     <td class="salary">2 500 – 4 000 USD</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45643273?query=java%20Kiev">Java-разработчик</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Andersen</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45521820?query=java%20Kiev">Middle QA Automation engineer (Java or JS)</a></td> 
+     <td class="city">Львов</td> 
+     <td class="companyName">Levi9 Ukraine</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45509589?query=java%20Kiev">Senior / Middle Java Engineer</a></td> 
+     <td class="city">Киев, Контрактовая площадь</td> 
+     <td class="companyName">Райффайзен Банк Аваль</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45499649?query=java%20Kiev">Senior Full Stack Developer (Java or Scala/React)</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">ООО&nbsp;Newxel</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45525289?query=java%20Kiev">Senior Java Developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Onseo</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/43681225?query=java%20Kiev">Middle / Senior Java Developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">OTP BANK Ukraine</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/44993703?query=java%20Kiev">Senior Java Engineer (Digital Banking Platform)</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">DataArt</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45334051?query=java%20Kiev">Middle Android developer</a></td> 
+     <td class="city">Киев, Контрактовая площадь и еще 1</td> 
+     <td class="companyName">Астарта-Киев</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45576131?query=java%20Kiev">Java SE Developer (Middle / Senior)</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">IT_Selection</td> 
+     <td class="salary">3 000 – 4 500 USD</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45435861?query=java%20Kiev">Middle / Senior Java Developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">ООО&nbsp;Preis HR agency</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45528493?query=java%20Kiev">QA Automation Engineer (Java)</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Swivl</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45576133?query=java%20Kiev">Java SE Developer (Middle / Senior)</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">IT_Selection</td> 
+     <td class="salary">3 000 – 4 500 USD</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45576138?query=java%20Kiev">Senior Java EE Developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">IT_Selection</td> 
+     <td class="salary">3 000 – 4 500 USD</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/44993247?query=java%20Kiev">Senior/Team Lead Android developer for Tango</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Onseo</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45501998?query=java%20Kiev">Backend developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">ООО&nbsp;Newxel</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/44534342?query=java%20Kiev">Android developer / Tech Lead Android</a></td> 
+     <td class="city">Минск, Площадь Якуба Коласа</td> 
+     <td class="companyName">Innowise Group / Фабрика инноваций и решений</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45084899?query=java%20Kiev">Developer .NET C#</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Aspose</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45738562?query=java%20Kiev">Software Developer In Test (Automation QA Engineer)</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Godel Technologies Europe</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45395007?query=java%20Kiev">QA Automation Engineer (.NET/C#)</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Метинвест Диджитал</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45655345?query=java%20Kiev">Middle QA Automation Engineer / Тестировщик</a></td> 
+     <td class="city">Москва</td> 
+     <td class="companyName">Hostaway</td> 
+     <td class="salary">1 200 – 2 000 USD</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45083952?query=java%20Kiev">Full stack Developer</a></td> 
+     <td class="city">Киев, Олимпийская</td> 
+     <td class="companyName">ЕКТА</td> 
+     <td class="salary">25 000 – 45 000 грн.</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45521041?query=java%20Kiev">Middle / Senior AQA Engineer (iOS, Android)</a></td> 
+     <td class="city">Львов</td> 
+     <td class="companyName">Levi9 Ukraine</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45522148?query=java%20Kiev">Middle AQA Engineer (Android)</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Levi9 Ukraine</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45655251?query=java%20Kiev">Senior QA Automation Engineer / Тестировщик</a></td> 
+     <td class="city">Санкт-Петербург</td> 
+     <td class="companyName">Hostaway</td> 
+     <td class="salary">2 000 – 3 500 USD</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45500702?query=java%20Kiev">Mobile Developer (Android)</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">ООО&nbsp;Newxel</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45744392?query=java%20Kiev">AWS API Developer</a></td> 
+     <td class="city">Киев, Кловская</td> 
+     <td class="companyName">Poluco LLC</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/41433892?query=java%20Kiev">Media Streaming Developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">TR Logic LLC</td> 
+     <td class="salary">от 1 500 EUR</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45430114?query=java%20Kiev">Atlassian Developer (Jira)</a></td> 
+     <td class="city">Киев, Дворец "Украина" и еще 1</td> 
+     <td class="companyName">Альфа-Банк, Украина</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45449170?query=java%20Kiev">QA Engineer</a></td> 
+     <td class="city">Москва</td> 
+     <td class="companyName">B2Broker Москва</td> 
+     <td class="salary">100 000 – 140 000 руб.</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45449193?query=java%20Kiev">QA Engineer</a></td> 
+     <td class="city">Санкт-Петербург, Горьковская</td> 
+     <td class="companyName">B2Broker Санкт-Петербург</td> 
+     <td class="salary">100 000 – 140 000 руб.</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/44009975?query=java%20Kiev">Middle Test Automation Engineer (Raiffeisen Online)</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Райффайзен Банк Аваль</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45105674?query=java%20Kiev">Front-End Developer</a></td> 
+     <td class="city">Киев, Контрактовая площадь</td> 
+     <td class="companyName">Райффайзен Банк Аваль</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45714635?query=java%20Kiev">Python Developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">ФОП Гартман Анастасия</td> 
+     <td class="salary">3 000 – 4 500 USD</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45218475?query=java%20Kiev">Разработчик ECM</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Инфопульс</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45564302?query=java%20Kiev">Data Engineer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">ООО&nbsp;Newxel</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45509645?query=java%20Kiev">Middle DevOps / SRE Engineer</a></td> 
+     <td class="city">Киев, Контрактовая площадь</td> 
+     <td class="companyName">Райффайзен Банк Аваль</td> 
+     <td class="salary">80 000 – 130 000 грн.</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/41505602?query=java%20Kiev">Data Integration Engineer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Wargaming, Minsk (Game Stream)</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45509629?query=java%20Kiev">Senior DevOps / SRE Engineer</a></td> 
+     <td class="city">Киев, Контрактовая площадь</td> 
+     <td class="companyName">Райффайзен Банк Аваль</td> 
+     <td class="salary">до 160 000 грн.</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45518632?query=java%20Kiev">Middle Front-End developer (React) from scratch</a></td> 
+     <td class="city">Львов</td> 
+     <td class="companyName">Levi9 Ukraine</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45502534?query=java%20Kiev">DevOps SRE Engineer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">ООО&nbsp;Newxel</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45349989?query=java%20Kiev">DevOps Engineer</a></td> 
+     <td class="city">Киев, Контрактовая площадь</td> 
+     <td class="companyName">Райффайзен Банк Аваль</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45540706?query=java%20Kiev">DevOps CI/CD Engineer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">ООО&nbsp;Newxel</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45738010?query=java%20Kiev">Big Data Engineer (Azure)</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Godel Technologies Europe</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/41413976?query=java%20Kiev">Senior Test Automation Engineer (IT Transformation project)</a></td> 
+     <td class="city">Киев, Контрактовая площадь</td> 
+     <td class="companyName">Райффайзен Банк Аваль</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45461652?query=java%20Kiev">Technical Interviewer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Soshace</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45521309?query=java%20Kiev">Solution Architect</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Levi9 Ukraine</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45737321?query=java%20Kiev">Big Data Engineer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Andersen</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/44464224?query=java%20Kiev">Розробник ETL, ODI</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">CREDIT AGRICOLE BANK</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45063273?query=java%20Kiev">Middle Security Engineer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">CS</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45521257?query=java%20Kiev">Solution Architect</a></td> 
+     <td class="city">Львов</td> 
+     <td class="companyName">Levi9 Ukraine</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45689117?query=java%20Kiev">SAP ABAP Developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">ДТЭК</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45407616?query=java%20Kiev">React Native&nbsp;Middle&nbsp;специалист</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">ARTDOCK</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45743515?query=java%20Kiev">PHP developer</a></td> 
+     <td class="city">Киев, Вокзальная</td> 
+     <td class="companyName">ООО&nbsp;DL Agency</td> 
+     <td class="salary">15 000 – 35 000 грн.</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45458606?query=java%20Kiev">Менеджер интернет-проектов / IT Project Manager (web-разработка)</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">ООО&nbsp;Alif IT Development</td> 
+     <td class="salary">1 000 – 3 000 USD</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45396513?query=java%20Kiev">Middle / Senior Big Data Engineer (AWS)</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Godel Technologies Europe</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45396493?query=java%20Kiev">Lead Big Data Engineer (AWS)</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Godel Technologies Europe</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45387594?query=java%20Kiev">Middle Backend Developer - JS</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Moeco</td> 
+     <td class="salary">до 3 000 USD</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45354675?query=java%20Kiev">Senior Android Developer (New Product)</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">ООО&nbsp;JatApp</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45295452?query=java%20Kiev">Senior FullStack Developer (REMOTE)</a></td> 
+     <td class="city">Москва</td> 
+     <td class="companyName">Luxoft</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/43623226?query=java%20Kiev">SAP PO/PI/XI Consultant</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">LeverX International</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/43445043?query=java%20Kiev">Automation QA Engineer / Инженер по автоматизации тестирования</a></td> 
+     <td class="city">Йошкар-Ола</td> 
+     <td class="companyName">TravelLine</td> 
+     <td class="salary">50 000 – 120 000 руб.</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45194299?query=java%20Kiev">QA manual Engineer (Salesforce)</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Andersen</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45196456?query=java%20Kiev">Cloud Architect engineer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Wise IT</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45370234?query=java%20Kiev">IT Recruiter</a></td> 
+     <td class="city">Минск</td> 
+     <td class="companyName">Басюк Виталий Анатольевич</td> 
+     <td class="salary">700 – 1 200 USD</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45088415?query=java%20Kiev">Senior Software Developer in Test (Automation QA Engineer)</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Godel Technologies Europe</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45101506?query=java%20Kiev">SDET (QA Automation Engineer)/Trainee</a></td> 
+     <td class="city">Гродно</td> 
+     <td class="companyName">Godel Technologies Europe</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45081335?query=java%20Kiev">Senior Android Developer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Иностр. п.&nbsp;4Текноладжиз</td> 
+     <td class="salary">от 3 500 USD</td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/44394081?query=java%20Kiev">SDET (QA Automation Engineer)/Trainee</a></td> 
+     <td class="city">Брест</td> 
+     <td class="companyName">Godel Technologies Europe</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45088410?query=java%20Kiev">Senior Big Data SW Engineer (Azure)</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Godel Technologies Europe</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45088354?query=java%20Kiev">Big Data Engineer (With Training)</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Godel Technologies Europe</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45088403?query=java%20Kiev">Front-End Engineer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Godel Technologies Europe</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45088396?query=java%20Kiev">Senior Front-End Engineer</a></td> 
+     <td class="city">Киев</td> 
+     <td class="companyName">Godel Technologies Europe</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy"> 
+     <td class="title"><a href="https://hh.ru/vacancy/45059206?query=java%20Kiev">PHP developer</a></td> 
+     <td class="city">Минск</td> 
+     <td class="companyName">Плэйтика Бел, ИООО</td> 
+     <td class="salary"></td> 
+    </tr>
+    <tr class="vacancy template" style="display: none"> 
+     <td class="title"><a href="url"></a></td> 
+     <td class="city"></td> 
+     <td class="companyName"></td> 
+     <td class="salary"></td> 
+    </tr> 
+   </tbody> 
+  </table>  
+ </body>
+</html>

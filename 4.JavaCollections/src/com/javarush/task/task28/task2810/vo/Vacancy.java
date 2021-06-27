@@ -1,7 +1,5 @@
 package com.javarush.task.task28.task2810.vo;
 
-import java.util.Objects;
-
 public class Vacancy {
 
     private String title;
